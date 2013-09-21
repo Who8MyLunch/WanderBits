@@ -48,12 +48,6 @@ I also need to include unit tests.  That will slow me down.  Might never get to 
 
 Write out an example game session.  Make sure to illustrate key types of actions and commands.  Think about a simple grammar for parsing user commands.  I could build a concise dictionary of verbs, nouns, maybe adjectives and adverbs, plus connector words.
 
-Near-Term Tasks
----------------
-
-    - Write overview application description.  A paragraph or two, perhaps describing the user experience.
-    - Describe the critical functional elements that make the application work.
-    - Think about what unit tests could be used to ensure proper operation of each functional element.
 
 Long
 
