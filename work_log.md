@@ -1,16 +1,14 @@
 
 WanderBits Work Log
 ===================
-
 This is a living document that will evolve as work progresses.
 
 Saturday Afternoon
 ------------------
-
 This might be a
 
-**Saturday Morning**
-
+Saturday Morning
+----------------
 I also need to include unit tests.  That will slow me down.  Might never get to the monster.
 
 Write out an example game session.  Make sure to illustrate key types of actions and commands.  Think about a simple grammar for parsing user commands.  I could build a concise dictionary of verbs, nouns, maybe adjectives and adverbs, plus connector words.
@@ -19,11 +17,11 @@ Classes to define in-game objects, and how objects interact with each other and 
 
 idea: start with class Thing from which all others inherit: items, rooms, and the user!
 
-config file as a serialization of all in-game Things
-
+config file as a serialization of all in-game Things.
 
 Friday Evening
 --------------
+I received the technical test from SpaceX this afternoon.  Wooo!
 
 Should there be a sense of time?  Would only make a difference if anything in the game had a temporal dependence.  Like another entity in the game!  A monster moving about could be neat, but it would also take time to implement.  Hmmm, maybe stuff like that should only be considered after the basic stuff is in place.  But still thinking along those lines: user has to search for a weapon while the monster is moving at random (or with a pattern?).  Very simple combat implemented as actions connecting weapons in possession with monster.  Some items might serve more damage than others.  The user and monster have finite amounts of hit points.  Turn-based attacks.  But if user waits too long, monster will go ahead and eat your head off.  Describe monster as horribly grotesque like Cthulhu.  I really like this Monster idea, but I must absolutely get the core features implemented first.  Monster is bonus fun stuff I get to do after the work part is done well.
 
