@@ -7,11 +7,33 @@ Saturday Afternoon
 ------------------
 It feels like a slow start.  I have lots of ideas in my head and they are swirling and swirling.  I don't yet see clearly what the major components are going to be nor do I see how they will connect together.  I going to write next a few paragraphs describing the game.
 
-### Backstory
+### The Story
 
 WanderBits is a game of adventure in the classic sense.  Remember Zork?  I sure do!  I remember learning about it in high school and being completely mesmerized by the entire concept.  It was like reading a book with which you could interact directly.  I could never get enough of those games!
 
 The game of WanderBits is the story of a young man on a quest to explore his world.  We don't know the name of this person, or where he comes from.  The world he lives in right now is a bit of a puzzle.  It's made of up curiously-connected rooms, but some of the doors are locked and with no key in sight.  There must be a key somewhere around?  Maybe in that pot over there?  Maybe under the carpet?  Hmmm???  We must help this poor fellow find his way out of this game so he can continue on with his life!
+
+Ok, I think that is enough for story time.
+
+### Game Parts
+
+Lets talk about a few important parts that make up the game engine.
+  1. **Command line parser**: A text parsing system can be made as complicated as you can imaging.  The first thing I thought about was the Python-based Natural-Language Tool Kit (NLTK).  I've always been curious about it and I have wondered what kind of cools things I might do with it.  Shit!  Forget about that. Back on topic.
+
+  A command parser for this type of game needs to support a relatively small number of basic functions.  It needs to know about actions for navigating and interacting with the game.  I needs to know about things to which the actions are directed.  A given command may involve multiple objects, e.g. put key in box.
+
+  The scope of this task is such that I need to keep stuff simple.  Game commands will be defined by an action word plus one or more arguments.  It will be much simpler to implement if the number and kind of arguments for each command are static.
+
+  Shit.  I just thought of something: does the command language also need to specified via config files?  I sure hope not...  I just read again the email:
+
+  > The game engine should be generic; as much as possible all the game specifics should live in the config file (description strings, supported verbs, room layout).
+
+It says 'supported verbs'.  One way to interpret this is so: the game engine comes with predefined actions, the config file may specify which actions are available in a given game instance.  The config file could also specify any number of aliases for each aaction.  Another way to support this requirement is to write actual Python code in the config file that implements a particular action.  That would not meet the other requirement for the config file to be useable by a non-expert user.
+
+
+  2. In-game objects
+
+
 
 Saturday Morning
 ----------------
