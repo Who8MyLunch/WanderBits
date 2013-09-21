@@ -20,7 +20,4 @@ Objectives / Requirements
    - introspection, e.g. inspect room
    - action, e.g. pick up crowbar
    - help, e.g. help go
-
-Some Thoughts
--------------
-
+- Do not rely on external libraries for fundamental game features
