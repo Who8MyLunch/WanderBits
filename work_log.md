@@ -3,6 +3,28 @@ WanderBits Work Log
 ===================
 This is a living document that will evolve as work progresses.
 
+Sunday Afternoon
+----------------
+No work done this morning.  Had to go a kid's birthday party.  Now it's just after 2pm and I plan to get a lot done with the `Parser` class and make at least a start on the `Executive`.
+
+The `Executive` can start off as whatever script I build for developing the `Parser`.  Here is how I'm thinking the data will flow:
+- start up
+- executive ataches input stream to `Parser` instance
+- `Parser` waits for new line of text from user
+- Parse each line according to the game rules, this will be the major work area for today
+- `Parser` will be a generator yielding parsed results back to the `Executive`
+- `Parser` keeps parsing until told to quit by `Executive`, or ctrl-c.
+
+Ok, let's make that happen.
+
+### Some Ideas to Think About
+
+  0. I will need something that handles the text IO with the user's console.  I don't think the parser should be doing this job.  I'd rather `Parser` did its one parsing job and nothing else.  This new thing could be called a `Console`.  It would know about reading from `sys.stdin` and writing to `sys.stdout`.  More details about `Console` later.
+
+  1. The `Parser` needs to know some information about which `Actions` and `Things` are valid for the game.  But I do not want the `Parser` class to be dependent on my implementation of `Thing` and `Action`.  I think the software will be more robust if the `Parser` is told about the game via a list of strings for the names of valid `Things` and `Actions`.
+
+  2. Lets say that the `Executive` will handle processing data related to `Actions` and `Things`.  My data flow might look like so: `Console` --> `Parser` --> `Executive` --> `Console`.  Any given user input will start at the `Console` and ultimately end at the `Console` when the response text is displayed.  Each downstream component is waiting until the upstream components finishes its work and passes it along.  The dependent components could be connected a number of ways.  In my mind it seems natural to use generators to enable the downstream components to simply iterate over user commands.  I know it could be equally implemented using coroutines, where the information is actively pushed to the next worker.  Generators seem an easier apoproach here.
+
 Saturday Evening
 ----------------
 It's time to think about how to incorporate Unit Testing.  So far I have a `Parser`, an `Action`, and a `Thing`.  The `Parser` might be the simplest of the three.  Or at least right now I think I can visualize in my head all that it needs to do.   Hmmm, perhaps I should write down what those things are.  And then won't that set me up to write Unit Tests?  Curious.
@@ -30,9 +52,9 @@ Ok, I think that is enough for story time.
 
 Lets talk about a few important parts that make up the game engine.
 
-  1. **Parser**: A text parsing system can be made as complicated as you can imaging.  The first thing I thought about was the Python-based Natural-Language Tool Kit (NLTK).  I've always been curious about it and I have wondered what kind of cools things I might do with it.  Shit!  Forget about that. Back on topic.
+  1. **Parser**: A text parsing system can be made as complicated as you can imaging.  The first thing I thought about was the Python-based Natural-Language Tool Kit (NLTK).  I've always been curious about it and I have wondered what kind of cool things I might do with it.  Shit!  Forget about that. Back on topic.
 
-  A command parser for this type of game needs to support a relatively small number of basic functions.  It needs to know about actions for navigating and interacting with the game.  I needs to know about things to which the actions are directed.  A given command may involve multiple objects, e.g. put key in box.
+  A command parser for this type of game needs to support a relatively small number of basic functions.  It needs to know about actions for navigating and interacting with the game.  It needs to know about things to which the actions are directed.  A given command may involve multiple objects, e.g. put key in box.
 
   The scope of this task is such that I need to keep stuff simple.  Game commands will be defined by an action word plus one or more arguments.  It will be much simpler to implement if the number and kind of arguments for each command are static.
 
