@@ -18,34 +18,34 @@ Ok, I think that is enough for story time.
 ### Game Parts
 
 Lets talk about a few important parts that make up the game engine.
-  1. **Command line parser**: A text parsing system can be made as complicated as you can imaging.  The first thing I thought about was the Python-based Natural-Language Tool Kit (NLTK).  I've always been curious about it and I have wondered what kind of cools things I might do with it.  Shit!  Forget about that. Back on topic.
 
-  A command parser for this type of game needs to support a relatively small number of basic functions.  It needs to know about actions for navigating and interacting with the game.  I needs to know about things to which the actions are directed.  A given command may involve multiple objects, e.g. put key in box.
+1. **Command Parser**: A text parsing system can be made as complicated as you can imaging.  The first thing I thought about was the Python-based Natural-Language Tool Kit (NLTK).  I've always been curious about it and I have wondered what kind of cools things I might do with it.  Shit!  Forget about that. Back on topic.
 
-  The scope of this task is such that I need to keep stuff simple.  Game commands will be defined by an action word plus one or more arguments.  It will be much simpler to implement if the number and kind of arguments for each command are static.
+A command parser for this type of game needs to support a relatively small number of basic functions.  It needs to know about actions for navigating and interacting with the game.  I needs to know about things to which the actions are directed.  A given command may involve multiple objects, e.g. put key in box.
 
-  Shit.  I just thought of something: does the command language also need to specified via config files?  I sure hope not...  I just read again the email:
+The scope of this task is such that I need to keep stuff simple.  Game commands will be defined by an action word plus one or more arguments.  It will be much simpler to implement if the number and kind of arguments for each command are static.
+
+Shit.  I just thought of something: does the command language also need to specified via config files?  I sure hope not...  Well, I just read the email again:
 
   > The game engine should be generic; as much as possible all the game specifics should live in the config file (description strings, supported verbs, room layout).
 
-It says 'supported verbs'.  One way to interpret this is so: the game engine comes with predefined actions, the config file may specify which actions are available in a given game instance.  The config file could also specify any number of aliases for each aaction.  Another way to support this requirement is to write actual Python code in the config file that implements a particular action.  That would not meet the other requirement for the config file to be useable by a non-expert user.
+It says "__supported verbs__".  One way to interpret this is so: the game engine comes with predefined actions, the config file may specify which actions are available in a given game instance.  The config file could also specify any number of aliases for each aaction.  Another way to support this requirement is to write actual Python code in the config file that implements a particular action.  That would not meet the other requirement for the config file to be useable by a non-expert user.  I will assume for now that this interpretation is fine.
 
+Back on track. Basic functionality of the `CommandParser` should be to receive as input text from the user after they presse the Enter key.  Idea: parse the text into a list of tokens using something basic like Python's shlex module.  Search from the start of the list for a word that matches the name of a command (including aliases).  Once found then begin second part of selecting the arguments.  White space is no problem.  But what about connector words like "the" or "a"?  e.g. "Take the apple" should be equivalent to "Take apple" and "Hey, take that apple" or "ehh, grab them apples".  I could maintain a list of ignore words and simply skip over them while parsing the user text for commands or arguments.  I like that idea a lot, but is it too simple??  I can also make aliases for the plural version of objects by adding an "s" to the end of each object's name.
 
-  2. In-game objects
+2. **Actions**: I really like the idea of having a fixed set of arguments for each action command.  I can define a base `Action` class that implements basic action capabilities.  Then create subclasses for each in-game action.  In order to carry out its mission, the `Action` instance will need access to local in-game items. This could be done by searching through `Thing` instances, starting with the user Things, and then other local Things for suitable matches to the argument list.
+
+2. **Things**: sdf
 
 
 
 Saturday Morning
 ----------------
-I also need to include unit tests.  That will slow me down.  Might never get to the monster.
+I also need to include unit tests.  That will slow me down.  Might never get to the monster :(
 
 Write out an example game session.  Make sure to illustrate key types of actions and commands.  Think about a simple grammar for parsing user commands.  I could build a concise dictionary of verbs, nouns, maybe adjectives and adverbs, plus connector words.
 
-Classes to define in-game objects, and how objects interact with each other and the user.
-
-idea: start with class Thing from which all others inherit: items, rooms, and the user!
-
-config file as a serialization of all in-game Things.
+Classes to define in-game objects, and how objects interact with each other and the user.  Idea: start with class Thing from which all others inherit: items, rooms, and the user!  The config file as a serialization of all in-game Things.
 
 Friday Evening
 --------------
