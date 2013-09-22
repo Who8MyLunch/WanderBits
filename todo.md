@@ -8,6 +8,7 @@ Near-Term Tasks
 - Write the basic Executive module
 - Write the basic Parser class
 - Think about basic Console class
+- Think about an Errors class.
 
 Long Term
 ---------
