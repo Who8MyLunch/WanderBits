@@ -7,6 +7,7 @@ Near-Term Tasks
 - Think about how everything plugs into the Executive module.
 - Write the basic Executive module
 - Write the basic Parser class
+- Think about basic Console class
 
 Long Term
 ---------
