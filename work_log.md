@@ -38,7 +38,6 @@ Lets talk about a few important parts that make up the game engine.
   3. **Things**: In-game content is to be represented by objects subclassed from a `Thing` base class.  Items like an apple or a key could be represented by a `Thing`.  But it gets better.  A room could be a `Thing`, and even the user could be a `Thing`.  A `Thing`-based object would know about concepts such as what other `Thing` is it inside of?  A room, a box, or the user's pocket?  The actof moving the user from one room to another would involve moving the user `Thing` over to the inside of the next room `Thing`.  The basic `Thing` class should handle stuff being inside of other stuff.  This means a `Thing` must know about the sizes of `Things` and the size of its own insides.  A `Thing` can be destroyed.  The set of `Things` inside a `Thing` may or may not be visible to the nearby user.  This allows for a box to be opened or closed.  Only `Things` that are visible may serve as valid `Action` arguments.  A `Thing` is able to describe its appearance when the user looks at it.
 
 
-
 Saturday Morning
 ----------------
 I also need to include unit tests.  That will slow me down.  Might never get to the monster :(
