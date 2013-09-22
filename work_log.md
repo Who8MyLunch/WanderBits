@@ -3,6 +3,17 @@ WanderBits Work Log
 ===================
 This is a living document that will evolve as work progresses.
 
+Saturday Evening
+----------------
+It's time to think about how to incorporate Unit Testing.  So far I have a `Parser`, an `Action`, and a `Thing`.  The `Parser` might be the simplest of the three.  Or at least right now I think I can visualize in my head all that it needs to do.   Hmmm, perhaps I should write down what those things are.  And then won't that set me up to write Unit Tests?  Curious.
+
+  **Parser**: I could have some predefined sentences and confirm that the `Parser` parses them correctly.  This one seems straightforward enough.
+
+  **Thing**: I described earlier some of the features that a basic `Thing` must have.  I could test the ability of putting something inside a `Thing` and then taking it back out.  Test whether a `Thing` inside of another `Thing` is visible or not.  Count how many items are inside.  Make more tests to cover new features of derived subclasses.
+
+  **Action**: `Actions` make stuff happen.  A simple test would be to set up a game scenario and then make an `Action` do its thing.  Verify afterwards that the task got done.  That's all I can think of right now.  More later.
+
+
 Saturday Afternoon
 ------------------
 It feels like a slow start.  I have lots of ideas in my head and they are swirling and swirling.  I don't yet see clearly what the major components are going to be nor do I see how they will connect together.  I going to write next a few paragraphs describing the game.
@@ -35,8 +46,11 @@ Lets talk about a few important parts that make up the game engine.
 
   2. **Actions**: I really like the idea of having a fixed set of arguments for each action command.  I can define a base `Action` class that implements basic action capabilities.  Then create subclasses for each in-game action.  In order to perform its work, the `Action` instance will need access to local in-game items.  This could be done by searching through `Thing` instances, starting with the user `Thing`, and then other local `Things` for suitable matches to the argument list.
 
-  3. **Things**: In-game content is to be represented by objects subclassed from a `Thing` base class.  Items like an apple or a key could be represented by a `Thing`.  But it gets better.  A room could be a `Thing`, and even the user could be a `Thing`.  A `Thing`-based object would know about concepts such as what other `Thing` is it inside of?  A room, a box, or the user's pocket?  The actof moving the user from one room to another would involve moving the user `Thing` over to the inside of the next room `Thing`.  The basic `Thing` class should handle stuff being inside of other stuff.  This means a `Thing` must know about the sizes of `Things` and the size of its own insides.  A `Thing` can be destroyed.  The set of `Things` inside a `Thing` may or may not be visible to the nearby user.  This allows for a box to be opened or closed.  Only `Things` that are visible may serve as valid `Action` arguments.  A `Thing` is able to describe its appearance when the user looks at it.
+  An `Action` makes stuff happen by manipulating in-game `Things` represented by the input arguments.  An `Action` must be able to find the proper `Thing` instance(s) that are refered to by a given input argument.  These `Things` must be in the local area and also be visible, otherwise the action cannot take place.  For example, 'Take apple' may be interpreted as a task to be performed by an instance of `Take` (a subclass of `Action`).  `Take` could have a method such as `do_it()`, or `Take` itself be implement `__callable__` and thus be called directly with the input argument.  In this case, then input was the word 'apple'.  The `Take` action must be able to search the local area for an instance of `Thing` named 'apple'.  Once found, `Take` would first ask the apple `Thing` to remove itself from its current container.  Then the `Take` action would add the apple `Thing` to the user `Thing`'s container.
 
+  3. **Things**: In-game content is to be represented by objects subclassed from a `Thing` base class.  Items like an apple or a key could be represented by a `Thing`.  But it gets better.  A room could be a `Thing`, and even the user could be a `Thing`.  A `Thing`-based object would know about concepts such as what other `Thing` is it inside of?  A room, a box, or the user's pocket?  The act of moving the user from one room to another would involve moving the user `Thing` over to the inside of the next room `Thing`.  The basic `Thing` class should handle stuff being inside of other stuff.  This means a `Thing` must know about the sizes of `Things` and the size of its own insides.  A `Thing` can be destroyed.  The set of `Things` inside a `Thing` may or may not be visible to the nearby user.  This allows for a box to be opened or closed.  Only `Things` that are visible may serve as valid `Action` arguments.  A `Thing` is able to describe its appearance when the user looks at it.
+
+  4. **Executive**:  All the stuff above needs to be attached to something and somewhere there needs to be an event loop running around.  Right now I'm thinking there could be an `Executive` module that is the central place where everything comes together.  It might be a simple module with a bunch of functions, or maybe it should be its own Class, perhaps yet another kind of `Thing`?  This executive could also be responsible for reading text from the user, and then also printing responses back to the user.
 
 Saturday Morning
 ----------------

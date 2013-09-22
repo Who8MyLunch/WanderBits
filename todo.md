@@ -5,12 +5,14 @@ WanderBits To Do List
 Near-Term Tasks
 ---------------
 - Think about what unit tests could be used to ensure proper operation of each functional element.
+- Think about how everything plugs into the Executive module.
+- Write the Executive module
 - Write the Parser class
-- Write the Thing class
-- Write the Action class
 
 Long Term
 ---------
+- Write the Thing class
+- Write the Action class
 - Define layout for testing rooms
 - Define a few simple items
 - ???
@@ -23,8 +25,8 @@ Research Topics
 - ???? more to come.
 - How to handle door locks and keys??
 
-Done
-----
-x Write overview application description.  A paragraph or two, perhaps describing the user experience.
-x Describe the critical functional elements that make the application work.
-x Define approximate order for writing core features
+Finished Tasks
+--------------
+- Write overview application description.  A paragraph or two, perhaps describing the user experience.
+- Describe the critical functional elements that make the application work.
+- Define approximate order for writing core features
