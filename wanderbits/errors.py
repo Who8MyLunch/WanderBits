@@ -21,6 +21,10 @@ class ActionError(GameError):
     pass
 
 
+class ThingError(GameError):
+    pass
+
+
 class ConsoleError(GameError):
     pass
 
