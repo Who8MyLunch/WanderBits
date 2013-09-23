@@ -1,4 +1,3 @@
-
 WanderBits Work Log
 ===================
 This is a living document that will evolve as work progresses.
@@ -104,11 +103,11 @@ Classes to define in-game objects, and how objects interact with each other and 
 
 Friday Evening, Sept. 20, 2013
 ------------------------------
-I received the technical test from SpaceX this afternoon.  Wooo!
+It's time to write a text-based adventure game!  Wooo!
 
 Should there be a sense of time?  Would only make a difference if anything in the game had a temporal dependence.  Like another entity in the game!  A monster moving about could be neat, but it would also take time to implement.  Hmmm, maybe stuff like that should only be considered after the basic stuff is in place.  But still thinking along those lines: user has to search for a weapon while the monster is moving at random (or with a pattern?).  Very simple combat implemented as actions connecting weapons in possession with monster.  Some items might serve more damage than others.  The user and monster have finite amounts of hit points.  Turn-based attacks.  But if user waits too long, monster will go ahead and eat your head off.  Describe monster as horribly grotesque like Cthulhu.  I really like this Monster idea, but I must absolutely get the core features implemented first.  Monster is bonus fun stuff I get to do after the work part is done well.
 
-The main objective here is to demonstrate my programming skills to SpaceX.  Tying in to fancy external libraries may not help me get further along here.  Some external libraries would certainly add nice features, but all that would do for me is demonstrate how well I can learn to use a foreign piece of software.  It is more important to write my own features from scratch, even though they will certainly not be as capable as something I might find somewhere online.  Forget about NLTK, forget about an AI bot, forget about a monster that will hunt down the user.
+The main objective here is to demonstrate programming skills.  Tying in to fancy external libraries may not help me get further along here.  Some external libraries would certainly add nice features, but all that would do for me is demonstrate how well I can learn to use a foreign piece of software.  It is more important to write my own features from scratch, even though they will certainly not be as capable as something I might find somewhere online.  Forget about NLTK, forget about an AI bot, forget about a monster that will hunt down the user.
 
 I can implement on my own all of the above required features.  It might be a boring game, but the instructions say nothing about making a fun game!  Ha!  Is that a loophole?  Maybe not. Nevermind. I will go crazy if I try to think or predict all the possible things they might be expecting.  I have to take the written instructions at face value.
 
