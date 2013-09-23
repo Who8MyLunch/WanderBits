@@ -13,7 +13,7 @@ from context import wanderbits
 class Test_Parser(unittest.TestCase):
 
     def setUp(self):
-        self.parser = wanderbits.line_parser.Parser()
+        self.parser = wanderbits.parser.Parser()
 
     def tearDown(self):
         pass

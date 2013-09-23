@@ -1,4 +1,4 @@
 import executive
-import line_parser
+import parser
 import things
 import actions
