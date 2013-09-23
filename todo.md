@@ -5,9 +5,7 @@ WanderBits To Do List
 Near-Term Tasks
 ---------------
 - Think about how everything plugs into the Executive module.
-- Write the basic Parser class
 - Write the basic Executive module
-- Write basic unit tests for Parser class
 - Think about basic Console class
 - Think about sys.stdin, sys.stdout to manage IO with user, tied to Console class.
 
@@ -29,6 +27,8 @@ Research Topics
 
 Finished Tasks
 --------------
+- Write basic unit tests for Parser class
+- Write the basic Parser class
 - Command parsing system, nouns, verbs, subjects, objects.  still not very clear about this
 - Think about an Errors class.
 - Think about what unit tests could be used to ensure proper operation of each functional element.
