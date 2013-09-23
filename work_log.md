@@ -9,6 +9,7 @@ Basic `Parser` is now writen.
 
 Hmmm.  I just thought of something.  The `Parser` currently checks through the input tokens for valid argument `Things` after the `Action`. This might be a mistake.  Each `Action` really has its own set of valid `Things` it can work with.  It will be easier to have the `Executive` handle making these checks.  Let the `Parser` take care of clobbering punctuation and known ignore words.  That will make the `Parser` definitely more focused.
 
+I also found out that the package name 'parser' is already used by Python itself.  Hhhmm.
 
 Sunday Afternoon
 ----------------
