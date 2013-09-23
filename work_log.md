@@ -3,8 +3,18 @@ WanderBits Work Log
 ===================
 This is a living document that will evolve as work progresses.
 
-Sunday Evening
---------------
+Monday Morning, Sept. 23, 2013
+------------------------------
+I have just a little but of time here before I have to take my son to school.  He's playing Scribblenaughts on the Wii right now.  Its hard to get work done as he's asking me questions every couple of minutes.
+
+I need to clarify how the `Executive` manages connections between components.  The most direct approach would be for `Executive` to be initialized with all necesary startup information.  This could be names of config files.  Executive would then be in charge of instantiating appropriate `Parser`, `Console`, `Things`, and `Actions`.  The details of this part are not completely clear.  Anyhow, at some point the `Executive` must be fully configured and ready to start running the game for the user.  The `Executive` should have a `start()` method that kicks off it's event loop.  This method will block until the user's game session is over.
+
+I just wrote the `Console` class.  There is not much to it.  I really might not even need a seperate class for the `Console`, but it at least segregates the particulars of stdin and stdout from the game's inner workings.
+
+
+
+Sunday Evening, Sept. 22, 2013
+------------------------------
 Basic `Parser` is now writen.
 
 Hmmm.  I just thought of something.  The `Parser` currently checks through the input tokens for valid argument `Things` after the `Action`. This might be a mistake.  Each `Action` really has its own set of valid `Things` it can work with.  It will be easier to have the `Executive` handle making these checks.  Let the `Parser` take care of clobbering punctuation and known ignore words.  That will make the `Parser` definitely more focused.
@@ -13,8 +23,8 @@ I also found out that the package name 'parser' is already used by Python itself
 
 I finished implementing a good start to the unit test for the parser module.  I'll more tests to it as it develops.
 
-Sunday Afternoon
-----------------
+Sunday Afternoon, Sept. 22, 2013
+--------------------------------
 No work done this morning.  Had to go a kid's birthday party.  Now it's just after 2pm and I plan to get a lot done with the `Parser` class and make at least a start on the `Executive`.
 
 The `Executive` can start off as whatever script I build for developing the `Parser`.  Here is how I'm thinking the data will flow:
@@ -35,8 +45,8 @@ Ok, let's make that happen.
 
   2. Lets say that the `Executive` will handle processing data related to `Actions` and `Things`.  My data flow might look like so: `Console` --> `Parser` --> `Executive` --> `Console`.  Any given user input will start at the `Console` and ultimately end at the `Console` when the response text is displayed.  Each downstream component is waiting until the upstream components finishes its work and passes it along.  The dependent components could be connected a number of ways.  In my mind it seems natural to use generators to enable the downstream components to simply iterate over user commands.  I know it could be equally implemented using coroutines, where the information is actively pushed to the next worker in the pipeline.  Generators seem an easier approach here.
 
-Saturday Evening
-----------------
+Saturday Evening, Sept. 21, 2013
+--------------------------------
 It's time to think about how to incorporate Unit Testing.  So far I have a `Parser`, an `Action`, and a `Thing`.  The `Parser` might be the simplest of the three.  Or at least right now I think I can visualize in my head all that it needs to do.   Hmmm, perhaps I should write down what those things are.  And then won't that set me up to write Unit Tests?  Curious.
 
   **Parser**: I could have some predefined sentences and confirm that the `Parser` parses them correctly.  This one seems straightforward enough.
@@ -46,8 +56,8 @@ It's time to think about how to incorporate Unit Testing.  So far I have a `Pars
   **Action**: `Actions` make stuff happen.  A simple test would be to set up a game scenario and then make an `Action` do its thing.  Verify afterwards that the task got done.  That's all I can think of right now.  More later.
 
 
-Saturday Afternoon
-------------------
+Saturday Afternoon, Sept. 21, 2013
+----------------------------------
 It feels like a slow start.  I have lots of ideas in my head and they are swirling and swirling.  I don't yet see clearly what the major components are going to be nor do I see how they will connect together.  I going to write next a few paragraphs describing the game.
 
 ### The Story
@@ -84,16 +94,16 @@ Lets talk about a few important parts that make up the game engine.
 
   4. **Executive**:  All the stuff above needs to be attached to something and somewhere there needs to be an event loop running around.  Right now I'm thinking there could be an `Executive` module that is the central place where everything comes together.  It might be a simple module with a bunch of functions, or maybe it should be its own Class, perhaps yet another kind of `Thing`?  This executive could also be responsible for reading text from the user, and then also printing responses back to the user.
 
-Saturday Morning
-----------------
+Saturday Morning, Sept. 21, 2013
+--------------------------------
 I also need to include unit tests.  That will slow me down.  Might never get to the monster :(
 
 Write out an example game session.  Make sure to illustrate key types of actions and commands.  Think about a simple grammar for parsing user commands.  I could build a concise dictionary of verbs, nouns, maybe adjectives and adverbs, plus connector words.
 
 Classes to define in-game objects, and how objects interact with each other and the user.  Idea: start with class Thing from which all others inherit: items, rooms, and the user!  The config file as a serialization of all in-game Things.
 
-Friday Evening
---------------
+Friday Evening, Sept. 20, 2013
+------------------------------
 I received the technical test from SpaceX this afternoon.  Wooo!
 
 Should there be a sense of time?  Would only make a difference if anything in the game had a temporal dependence.  Like another entity in the game!  A monster moving about could be neat, but it would also take time to implement.  Hmmm, maybe stuff like that should only be considered after the basic stuff is in place.  But still thinking along those lines: user has to search for a weapon while the monster is moving at random (or with a pattern?).  Very simple combat implemented as actions connecting weapons in possession with monster.  Some items might serve more damage than others.  The user and monster have finite amounts of hit points.  Turn-based attacks.  But if user waits too long, monster will go ahead and eat your head off.  Describe monster as horribly grotesque like Cthulhu.  I really like this Monster idea, but I must absolutely get the core features implemented first.  Monster is bonus fun stuff I get to do after the work part is done well.
