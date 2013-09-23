@@ -3,6 +3,13 @@ WanderBits Work Log
 ===================
 This is a living document that will evolve as work progresses.
 
+Sunday Evening
+--------------
+Basic `Parser` is now writen.
+
+Hmmm.  I just thought of something.  The `Parser` currently checks through the input tokens for valid argument `Things` after the `Action`. This might be a mistake.  Each `Action` really has its own set of valid `Things` it can work with.  It will be easier to have the `Executive` handle making these checks.  Let the `Parser` take care of clobbering punctuation and known ignore words.  That will make the `Parser` definitely more focused.
+
+
 Sunday Afternoon
 ----------------
 No work done this morning.  Had to go a kid's birthday party.  Now it's just after 2pm and I plan to get a lot done with the `Parser` class and make at least a start on the `Executive`.

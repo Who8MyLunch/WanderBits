@@ -13,21 +13,18 @@ class Parser(object):
     Parser class for WanderBits, a text-based adventure game.
     """
 
-    def __init__(self, game_actions, game_things):
+    def __init__(self, punctuation=None, ignore_words=None):
         """
         Initialize parser with known game actions and game things.
-
-        actions: sequence of strings, each string represents a valid game Action.
-        things: sequence of strings, each string represents a kind of Thing in the game.
 
         Errors will result in raising a ParserError exception whose message value will be
         suitable for display direct to the user console.
         """
-        self.game_actions = game_actions
-        self.game_things = game_things
+        if not punctuation:
+            self.punctuation = ',.?!;:-+[]{}'
 
-        self.punctuation = ',.?!;:-+[]{}'
-        self.ignore_words = ['a', 'the', 'at', 'or', 'to', 'too', 'eh']
+        if not ignore_words:
+            self.ignore_words = ['a', 'the', 'at', 'or', 'to', 'too', 'eh']
 
         # Done.
 
@@ -44,10 +41,10 @@ class Parser(object):
         """
         tokens = self.parse(line)
 
-        action, things = self.validate(tokens)
+        # action, things = self.validate(tokens)
 
         # Done.
-        return action, things
+        return tokens
 
 
 
@@ -75,25 +72,21 @@ class Parser(object):
 
 
 
-    def validate(self, tokens):
-        """
-        Make sure sequence of tokens begins with a known Action.
-        If tokens exist after the Action, make sure they are valid Things.
-
-        Also, reject as tokens any words that match with anything on the ignore list.
-        """
-        for w in self.ignore_words:
-            if w in tokens:
-                tokens.remove(w)
-
-        action = tokens[0]
-        if not action.lower() in self.game_actions:
-            raise errors.ParserError('The word {:s} not a known game action.'.format(action))
-
-        things = tokens[1:]
-        for t in things:
-            if not t.lower() in self.game_things:
-                raise errors.ParserError('The word {:s} not a known game thing.'.format(t))
-
-        # Done.
-        return action, things
+    # def validate(self, tokens):
+    #     """
+    #     Make sure sequence of tokens begins with a known Action.
+    #     If tokens exist after the Action, make sure they are valid Things.
+    #     Also, reject as tokens any words that match with anything on the ignore list.
+    #     """
+    #     for w in self.ignore_words:
+    #         if w in tokens:
+    #             tokens.remove(w)
+    #     action = tokens[0]
+    #     if not action.lower() in self.game_actions:
+    #         raise errors.ParserError('The word {:s} not a known game action.'.format(action))
+    #     things = tokens[1:]
+    #     for t in things:
+    #         if not t.lower() in self.game_things:
+    #             raise errors.ParserError('The word {:s} not a known game thing.'.format(t))
+    #     # Done.
+    #     return action, things
