@@ -25,7 +25,7 @@ class Parser(object):
             self.punctuation = ',.?!;:-+[]{}'
 
         if not ignore_words:
-            self.ignore_words = ['a', 'the', 'at', 'or', 'in', 'to', 'too', 'eh', 'me', 'my']
+            self.ignore_words = ['a', 'the', 'at', 'or', 'in', 'on', 'to', 'too', 'eh', 'me', 'my']
 
         # Done.
 

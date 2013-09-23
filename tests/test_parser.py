@@ -10,10 +10,10 @@ import unittest
 from context import wanderbits
 
 
-class Test_Parser_Basic(unittest.TestCase):
+class Test_Parser(unittest.TestCase):
 
     def setUp(self):
-        self.parser = wanderbits.parser.Parser()
+        self.parser = wanderbits.line_parser.Parser()
 
     def tearDown(self):
         pass
@@ -24,11 +24,42 @@ class Test_Parser_Basic(unittest.TestCase):
         tokens = self.parser.parse(line)
 
 
+    def test_does_it_parse(self):
+        line = 'put cat dog'
+        tokens = self.parser.parse(line)
 
-    def test_two(self):
-        fname = 's'#os.path.join(path_data, 'Lena.dat')
-        # data, meta = io.read(fname)
-        # self.assertTrue(data.shape == (512, 512, 3))
+        tokens_true = ['put', 'cat', 'dog']
+
+        self.assertTrue(len(tokens) == len(tokens_true))
+        for u, v in zip(tokens, tokens_true):
+            msg = u + ' != ' + v
+            self.assertTrue(u == v, msg)
+
+
+    def test_punctuation(self):
+        line = '.,;put cat!?,..dog! ,.?!;:-+[]{}'
+        tokens = self.parser.parse(line)
+
+        tokens_true = ['put', 'cat', 'dog']
+
+        self.assertTrue(len(tokens) == len(tokens_true))
+        for u, v in zip(tokens, tokens_true):
+            msg = u + ' != ' + v
+            self.assertTrue(u == v, msg)
+
+
+    def test_ignore_words(self):
+        line = 'put the cat on the dog'
+        tokens = self.parser.parse(line)
+
+        tokens_true = ['put', 'cat', 'dog']
+
+        self.assertTrue(len(tokens) == len(tokens_true))
+        for u, v in zip(tokens, tokens_true):
+            msg = u + ' != ' + v
+            self.assertTrue(u == v, msg)
+
+
 
 
 # Standalone.
