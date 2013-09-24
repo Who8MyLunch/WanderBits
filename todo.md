@@ -6,6 +6,7 @@ Near-Term Tasks
 ---------------
 - Think about how everything plugs into the Executive module.
 - Hook up Parser to Executive
+- Unit test for Executive.
 - Write the basic Thing class
 - Write the basic Action class
 
