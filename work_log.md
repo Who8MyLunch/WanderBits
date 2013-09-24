@@ -2,6 +2,15 @@ WanderBits Work Log
 ===================
 This is a living document that will evolve as work progresses.
 
+Tuesday Morning, Sept. 24, 2013
+-------------------------------
+Today I have a big meeting Santa Barbara for a big work-related meeting.  I got here in town a bit early so I get work on this little project a little bit at the Starbucks.
+
+So far I have the `Parser` and `Console` implemented with basic functionality.  The `Executive` will be the one talking to these two parts.  The `Executive` needs to send messages to the `Console` and receive user input from the `Console`.  Soon I will have to get working on `Things` and `Actions`.  But before that I can hook up the `Console` and `Parser` to the `Executive` and run a simple event loop.
+
+Ok, I got a few good bits of work done with the `Execute`.  The event loop works and it can echo back to me the text that I type in.  Command prompt is simple and neat.  That's all for this morning.
+
+
 Monday Morning, Sept. 23, 2013
 ------------------------------
 I have just a little but of time here before I have to take my son to school.  He's playing Scribblenaughts on the Wii right now.  Its hard to get work done as he's asking me questions every couple of minutes.

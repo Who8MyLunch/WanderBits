@@ -7,6 +7,9 @@ Executive class for WanderBits, a text-based adventure game.
 """
 
 import errors
+import console
+import line_parser
+
 
 
 class Executive(object):
@@ -14,43 +17,47 @@ class Executive(object):
     Executive class for WanderBits, a text-based adventure game.
     """
 
-    def __init__(self):
+    def __init__(self, options=None):
         """
         Initialize Executive class instance.
         """
-        pass
 
+        self.console = console.Console()
+        self.parser = line_parser.Parser()
+
+        # Done.
 
 
     def start(self):
         """
         Start running the Executive's event loop.  Block until user's game session is finished.
         """
-        pass
+
+        keep_looping = True
+        while keep_looping:
+
+            try:
+                # Line of text from user.
+                line = self.console.readline()
+
+                # Do something with text.
+                response = 'hello!!!! ' + line
+
+                # Send response to user.
+                self.console.write(response)
+
+            except KeyboardInterrupt:
+                # Save game state.
+                self.console.write('User stop!')
+                self.console.write('Saving game state...')
+
+                # TODO: save game info.
+
+                # End the game nicely.
+                self.console.write('Bye.\n')
+                keep_looping = False
 
 
+if __name__ == '__main__':
+    pass
 
-
-    #
-    # not so sure I need this stuff below....
-    #
-    # def validate(self, tokens):
-    #     """
-    #     Make sure sequence of tokens begins with a known Action.
-    #     If tokens exist after the Action, make sure they are valid Things.
-    #     Also, reject as tokens any words that match with anything on the ignore list.
-    #     """
-    #     for w in self.ignore_words:
-    #         if w in tokens:
-    #             tokens.remove(w)
-
-    #     action = tokens[0]
-    #     if not action.lower() in self.game_actions:
-    #         raise errors.ParserError('The word {:s} not a known game action.'.format(action))
-
-    #     things = tokens[1:]
-    #     for t in things:
-    #         if not t.lower() in self.game_things:
-    #             raise errors.ParserError('The word {:s} not a known game thing.'.format(t))
-    #     # Done.
-    #     return action, things

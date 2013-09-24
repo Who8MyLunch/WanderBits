@@ -35,6 +35,7 @@ class Console(object):
         """
         Read a line of text from the user.  Block until user hits enter.
         """
+        self.stdout.write('\n > ')
         line = self.stdin.readline()
 
         return line.strip()
@@ -44,4 +45,7 @@ class Console(object):
         """
         Write some text out to the user.
         """
-        self.stdout.write(text)
+
+        output = '\n{:s}'.format(text)
+
+        self.stdout.write(output)

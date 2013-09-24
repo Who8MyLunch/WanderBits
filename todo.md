@@ -5,14 +5,13 @@ WanderBits To Do List
 Near-Term Tasks
 ---------------
 - Think about how everything plugs into the Executive module.
-- Write the basic Executive module
-- Think about basic Console class
-- Think about sys.stdin, sys.stdout to manage IO with user, tied to Console class.
+- Hook up Parser to Executive
+- Write the basic Thing class
+- Write the basic Action class
+
 
 Long Term
 ---------
-- Write the basic Thing class
-- Write the basic Action class
 - Define layout for testing rooms
 - Define a few simple items
 - Serialize Things, Actions to YAML file.  Basis for defining game via config files.
@@ -27,6 +26,12 @@ Research Topics
 
 Finished Tasks
 --------------
+- Hook up Console to Executive
+- Update Console class to provide a command prompt.  Manage line spacing between user input text and game response text.
+- Write the basic Executive module
+- Run a simple event loop
+- Think about sys.stdin, sys.stdout to manage IO with user, tied to Console class.
+- Think about basic Console class
 - Write basic unit tests for Parser class
 - Write the basic Parser class
 - Command parsing system, nouns, verbs, subjects, objects.  still not very clear about this

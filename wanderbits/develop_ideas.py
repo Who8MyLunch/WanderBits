@@ -7,8 +7,9 @@ Test and develop game ideas here.
 import sys
 
 import errors
-import parser
-import console
+import executive
 
 #################################################
 
+E = executive.Executive()
+E.start()
