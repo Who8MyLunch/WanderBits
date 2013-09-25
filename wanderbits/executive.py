@@ -6,10 +6,11 @@ from __future__ import division, print_function, unicode_literals
 Executive class for WanderBits, a text-based adventure game.
 """
 
+import sys
+
 import errors
 import console
 import line_parser
-
 
 
 class Executive(object):
@@ -17,15 +18,67 @@ class Executive(object):
     Executive class for WanderBits, a text-based adventure game.
     """
 
-    def __init__(self, options=None):
+    def __init__(self, options=None, stdin=None, stdout=None):
         """
         Initialize Executive class instance.
+
+        stdin, stdout: default to sys.stdin and sys.stdout
         """
 
-        self.console = console.Console()
-        self.parser = line_parser.Parser()
+        if stdin:
+            self.stdin = stdin
+        else:
+            self.stdin = sys.stdin
+
+        if stdout:
+            self.stdout = stdout
+        else:
+            self.stdout = sys.stdout
+
+        actions = ['go', 'quit', 'exit']
+        self.parser = line_parser.Parser(actions)
 
         # Done.
+
+
+
+    def console_read(self):
+        """
+        Read a line of text from the user.  Block until user hits enter.
+        Also handle nice display of command prompt.
+        """
+        self.stdout.write('\n> ')
+        line = self.stdin.readline()
+
+        return line.strip()
+
+
+
+    def console_reader(self):
+        """
+        A generator to yield user's lines of text to the caller.
+        """
+        try:
+            while True:
+                yield self.console_read()
+
+        except KeyboardInterrupt:
+            # catch when the user hits ctrl-c at the prompt.
+            # Yield exit command.
+            yield 'exit'
+
+        # Done.
+
+
+
+    def console_write(self, text):
+        """
+        Write some text out to the user.
+        """
+        output = '{:s}\n'.format(text)
+
+        self.stdout.write(output)
+
 
 
     def start(self):
@@ -33,31 +86,37 @@ class Executive(object):
         Start running the Executive's event loop.  Block until user's game session is finished.
         """
 
-        keep_looping = True
-        while keep_looping:
+        # Main loop.
+        self.console_write('\nWelcome\n')
+        for line in self.console_reader():
 
-            try:
-                # Line of text from user.
-                line = self.console.readline()
+            # Parse new line of text.
+            action_name, arguments = self.parser.parse(line)
 
-                # Do something with text.
-                response = 'hello!!!! ' + line
+            # Take action!
 
-                # Send response to user.
-                self.console.write(response)
+            # Send response to user.
+            response = 'hello!!!! ' + action_name
+            self.console_write(response)
 
-            except KeyboardInterrupt:
-                # Save game state.
-                self.console.write('User stop!')
-                self.console.write('Saving game state...')
 
-                # TODO: save game info.
+        # Clean up, save game state, exit.
+        # Save game state.
+        self.console_write('Exit!\nSaving game state...')
 
-                # End the game nicely.
-                self.console.write('Bye.\n')
-                keep_looping = False
+        # TODO: save game info.
+
+        # End the game nicely.
+        self.console_write('Bye.\n')
+
+
+
+
 
 
 if __name__ == '__main__':
-    pass
+
+
+    E = Executive()
+    E.start()
 

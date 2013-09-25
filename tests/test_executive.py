@@ -14,8 +14,7 @@ import cStringIO as StringIO
 class Test_Executive(unittest.TestCase):
 
     def setUp(self):
-        self.line_0 = 'hello to the test'
-        self.line_1 = 'good day to the world!'
+        pass
 
     def tearDown(self):
         pass
@@ -26,24 +25,62 @@ class Test_Executive(unittest.TestCase):
 
 
     #############################################
-    # Test reading/writing text from command prompt.
+    # Reading and writing text.
     def test_read_two_lines(self):
-        lines = '{:s}\n{:s}\n'.format(self.line_0, self.line_1)
+        line_1 = 'hello to the test'
+        line_2 = 'good day to the world!'
+        lines = '{:s}\n{:s}\n'.format(line_1, line_2)
 
-        stdin = StringIO.StringIO(lines)
+        buff_in = StringIO.StringIO(lines)
+        buff_out = StringIO.StringIO()
 
-        E = wanderbits.executive.Executive(stdin=stdin)
+        E = wanderbits.executive.Executive(stdin=buff_in, stdout=buff_out)
 
-        line_0 = E.readline()
-        line_1 = E.readline()
+        line_a = E.console_read()
+        line_b = E.console_read()
 
-        self.assertTrue(line_0 == self.line_0)
-        self.assertTrue(line_1 == self.line_1)
+        self.assertTrue(line_1 == line_a)
+        self.assertTrue(line_2 == line_b)
 
 
     def test_write_two_lines(self):
-        pass
+        line_1 = 'hello to the test'
+        line_2 = 'good day to the world!'
+        lines = '{:s}\n{:s}\n'.format(line_1, line_2)
 
+        buff_in = StringIO.StringIO()
+        buff_out = StringIO.StringIO()
+
+        E = wanderbits.executive.Executive(stdin=buff_in, stdout=buff_out)
+
+        E.console_write(line_1)
+        self.assertTrue(buff_out.getvalue() == line_1 + '\n')
+
+        E.console_write(line_2)
+        self.assertTrue(buff_out.getvalue() == line_1 + '\n' + line_2 + '\n')
+
+
+    def test_read_generator(self):
+        line_1 = 'hello to the test'
+        line_2 = 'good day to the world!'
+        lines = '{:s}\n{:s}\n'.format(line_1, line_2)
+
+        buff_in = StringIO.StringIO(lines)
+        buff_out = StringIO.StringIO()
+
+        E = wanderbits.executive.Executive(stdin=buff_in, stdout=buff_out)
+
+        lines_work = ''
+        for k, line in enumerate(E.console_reader()):
+            if k >= 4:
+                raise ValueError('Should have stopped before now')
+
+            if len(line):
+                lines_work += line + '\n'
+            else:
+                break
+
+        self.assertTrue(lines == lines_work)
 
 
 
