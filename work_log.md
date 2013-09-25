@@ -2,6 +2,13 @@ WanderBits Work Log
 ===================
 This is a living document that will evolve as work progresses.
 
+Wednesday Morning, Sept. 25, 2013
+---------------------------------
+Working a bit at home before work.
+
+I thought more about the `Console` class.  I don't think I need it as all it does is handle reading/writing from/to stdin/stdout.  I think it will be much simpler to move the read and write functions over to the `Executive` module.  More tidy implementation.
+
+
 Tuesday Morning, Sept. 24, 2013
 -------------------------------
 Today I have a big meeting Santa Barbara for a big work-related meeting.  I got here in town a bit early so I get work on this little project a little bit at the Starbucks.
@@ -20,7 +27,6 @@ I need to clarify how the `Executive` manages connections between components.  T
 I just wrote the `Console` class.  There is not much to it.  I really might not even need a seperate class for the `Console`, but it at least segregates the particulars of stdin and stdout from the game's inner workings.
 
 
-
 Sunday Evening, Sept. 22, 2013
 ------------------------------
 Basic `Parser` is now writen.
@@ -30,6 +36,7 @@ Hmmm.  I just thought of something.  The `Parser` currently checks through the i
 I also found out that the package name 'parser' is already used by Python itself.  Hhhmm.  I think I have the parser name thing figured out.  It should be ok as long as my parser stays within this game package and I don't try to import it interactively from outside the package.
 
 I finished implementing a good start to the unit test for the parser module.  I'll more tests to it as it develops.
+
 
 Sunday Afternoon, Sept. 22, 2013
 --------------------------------
@@ -52,6 +59,7 @@ Ok, let's make that happen.
   1. The `Parser` needs to know some information about which `Actions` and `Things` are valid for the game.  But I do not want the `Parser` class to be dependent on my implementation of `Thing` and `Action`.  I think the software will be more robust if the `Parser` is told about the game via a list of strings for the names of valid `Things` and `Actions`.
 
   2. Lets say that the `Executive` will handle processing data related to `Actions` and `Things`.  My data flow might look like so: `Console` --> `Parser` --> `Executive` --> `Console`.  Any given user input will start at the `Console` and ultimately end at the `Console` when the response text is displayed.  Each downstream component is waiting until the upstream components finishes its work and passes it along.  The dependent components could be connected a number of ways.  In my mind it seems natural to use generators to enable the downstream components to simply iterate over user commands.  I know it could be equally implemented using coroutines, where the information is actively pushed to the next worker in the pipeline.  Generators seem an easier approach here.
+
 
 Saturday Evening, Sept. 21, 2013
 --------------------------------
@@ -102,6 +110,7 @@ Lets talk about a few important parts that make up the game engine.
 
   4. **Executive**:  All the stuff above needs to be attached to something and somewhere there needs to be an event loop running around.  Right now I'm thinking there could be an `Executive` module that is the central place where everything comes together.  It might be a simple module with a bunch of functions, or maybe it should be its own Class, perhaps yet another kind of `Thing`?  This executive could also be responsible for reading text from the user, and then also printing responses back to the user.
 
+
 Saturday Morning, Sept. 21, 2013
 --------------------------------
 I also need to include unit tests.  That will slow me down.  Might never get to the monster :(
@@ -109,6 +118,7 @@ I also need to include unit tests.  That will slow me down.  Might never get to 
 Write out an example game session.  Make sure to illustrate key types of actions and commands.  Think about a simple grammar for parsing user commands.  I could build a concise dictionary of verbs, nouns, maybe adjectives and adverbs, plus connector words.
 
 Classes to define in-game objects, and how objects interact with each other and the user.  Idea: start with class Thing from which all others inherit: items, rooms, and the user!  The config file as a serialization of all in-game Things.
+
 
 Friday Evening, Sept. 20, 2013
 ------------------------------
