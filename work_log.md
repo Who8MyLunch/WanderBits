@@ -8,6 +8,8 @@ Working a bit at home before work.
 
 I thought more about the `Console` class.  I don't think I need it as all it does is handle reading/writing from/to stdin/stdout.  I think it will be much simpler to move the read and write functions over to the `Executive` module.  More tidy implementation.
 
+While merging `Console` stuff into `Executive`, I noticed that I could add one last detail to `Parser`.  Right now it simply returns a list of tokens.  From the beginning I have been thinking that my command language is made up of a leading action word followed by one or more arguments.  I will mod the `Parser` such that it outputs two things: the action name and a list of action argument names.  These actions names will not yet be validated against the game content.  That part will happen inside the `Executive`.
+
 
 Tuesday Morning, Sept. 24, 2013
 -------------------------------
@@ -22,7 +24,7 @@ Monday Morning, Sept. 23, 2013
 ------------------------------
 I have just a little but of time here before I have to take my son to school.  He's playing Scribblenaughts on the Wii right now.  Its hard to get work done as he's asking me questions every couple of minutes.
 
-I need to clarify how the `Executive` manages connections between components.  The most direct approach would be for `Executive` to be initialized with all necesary startup information.  This could be names of config files.  Executive would then be in charge of instantiating appropriate `Parser`, `Console`, `Things`, and `Actions`.  The details of this part are not completely clear.  Anyhow, at some point the `Executive` must be fully configured and ready to start running the game for the user.  The `Executive` should have a `start()` method that kicks off it's event loop.  This method will block until the user's game session is over.
+I need to clarify how the `Executive` manages connections between components.  The most direct approach would be for `Executive` to be initialized with all necesary startup information.  This could be names of config files.  `Executive` would then be in charge of instantiating appropriate `Parser`, `Console`, `Things`, and `Actions`.  The details of this part are not completely clear.  Anyhow, at some point the `Executive` must be fully configured and ready to start running the game for the user.  The `Executive` should have a `start()` method that kicks off it's event loop.  This method will block until the user's game session is over.
 
 I just wrote the `Console` class.  There is not much to it.  I really might not even need a seperate class for the `Console`, but it at least segregates the particulars of stdin and stdout from the game's inner workings.
 

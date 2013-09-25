@@ -14,13 +14,20 @@ class Parser(object):
     Parser class for WanderBits, a text-based adventure game.
     """
 
-    def __init__(self, punctuation=None, ignore_words=None):
+    def __init__(self, actions, punctuation=None, ignore_words=None):
         """
-        Initialize parser with known game actions and game things.
+        Initialize text parser.
 
-        Errors will result in raising a ParserError exception whose message value will be
-        suitable for display direct to the user console.
+        actions: list of valid game Action names.
+        punctation: (optional) string of punctation characters that will be ignored.
+        ignore_words: (optional) list of words to ignore
         """
+
+        if issubclass(type(actions), basestring):
+            actions = [actions]
+
+        self.actions = [a.lower() for a in actions]
+
         if not punctuation:
             self.punctuation = ',.?!;:-+[]{}'
 
@@ -28,20 +35,6 @@ class Parser(object):
             self.ignore_words = ['a', 'the', 'at', 'or', 'in', 'on', 'to', 'too', 'eh', 'me', 'my']
 
         # Done.
-
-
-
-    # def work(self, line):
-    #     """
-    #     Do a unit of work for the good of the game.
-    #     Accept a line of text that was originally entered by the user.
-    #     Return a tuple of results: (action_name, list_of_things).
-    #     Raise a ParserError exception if there is a problem.
-    #     """
-    #     tokens = self.parse(line)
-    #     # action, things = self.validate(tokens)
-    #     # Done.
-    #     return tokens
 
 
 
@@ -57,6 +50,29 @@ class Parser(object):
         if not issubclass(type(line), basestring):
             raise errors.ParserError('Input line argument must be string or unicode: {:s}'.format(str(line)))
 
+        # Carve out the tokens.
+        tokens = self.chop_words(line)
+
+        # Remove ignore words from token list.
+        tokens = self.remove_ignore_words(tokens)
+
+        # Regroup tokens into an action name followed by one or more action arguments.
+        action_name, action_arguments = tokens[0], tokens[1:]
+
+        # Valid action?
+        if action_name not in self.actions:
+            raise errors.ParserError('The word "{:s}" is not a valid action.'.format(action_name))
+
+        # Done.
+        return action_name, action_arguments
+
+
+
+    def chop_words(self, line):
+        """
+        Chop user-supplied string into tokens.
+        Ignore punctuation.
+        """
         # Force lowercase.
         line = line.lower()
 
@@ -64,21 +80,18 @@ class Parser(object):
         for p in self.punctuation:
             line = line.replace(p, ' ')
 
-        # Carve out the tokens.
         tokens = line.split()
-
-        # Remove ignore words from token list.
-        tokens = self.validate(tokens)
 
         # Done.
         return tokens
 
 
 
-    def validate(self, tokens):
+    def remove_ignore_words(self, tokens):
         """
         Make sure sequence of tokens begins with a known Action.
-        If tokens exist after the Action, make sure they are valid Things.
+        If tokens exist after the Action, assume they are valid.  Proper checking of Things must happen outside this class.
+
         Also, reject as tokens any words that match with anything on the ignore list.
         """
 

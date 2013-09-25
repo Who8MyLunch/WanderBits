@@ -11,7 +11,7 @@ from context import wanderbits
 
 import cStringIO as StringIO
 
-class Test_Console(unittest.TestCase):
+class Test_Executive(unittest.TestCase):
 
     def setUp(self):
         self.line_0 = 'hello to the test'
@@ -22,18 +22,20 @@ class Test_Console(unittest.TestCase):
 
 
     def test_does_it_init(self):
-        console = wanderbits.console.Console()
+        E = wanderbits.executive.Executive()
 
 
+    #############################################
+    # Test reading/writing text from command prompt.
     def test_read_two_lines(self):
         lines = '{:s}\n{:s}\n'.format(self.line_0, self.line_1)
 
         stdin = StringIO.StringIO(lines)
 
-        console = wanderbits.console.Console(stdin=stdin)
+        E = wanderbits.executive.Executive(stdin=stdin)
 
-        line_0 = console.readline()
-        line_1 = console.readline()
+        line_0 = E.readline()
+        line_1 = E.readline()
 
         self.assertTrue(line_0 == self.line_0)
         self.assertTrue(line_1 == self.line_1)
@@ -41,6 +43,9 @@ class Test_Console(unittest.TestCase):
 
     def test_write_two_lines(self):
         pass
+
+
+
 
     # def test_does_it_parse(self):
     #     line = 'put cat dog'
