@@ -2,6 +2,16 @@ WanderBits Work Log
 ===================
 This is a living document that will evolve as work progresses.
 
+
+Wednesday Afternoon, Sept. 25, 2013
+-----------------------------------
+Before going further with `Executive` I am going to implement an `Action` class.  What is an `Action`?  It controls how change happens in the game.  The user enters a valid command, and this is translated into an `Action`.  The arguments that follow the action verb on the command line are given to the matching `Action` instance.  The `Action` in turn then does whatever is needed to realize the user's command.  The arguments correspond to: objects that are within reach of the user, allowed navigation directions, more?
+
+There could potentially be a large number of game `Actions`.  I think now that it will work best if each kind of `Action` inherits from a base `Action` class.  I am also going to take this opportunity to use the Python Abstract Base Class feature.  I've seen it before but never used it.  This seems like a good time!
+
+
+
+
 Wednesday Morning, Sept. 25, 2013
 ---------------------------------
 Working a bit at home before work.

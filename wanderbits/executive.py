@@ -9,8 +9,8 @@ Executive class for WanderBits, a text-based adventure game.
 import sys
 
 import errors
-import console
 import line_parser
+import action
 
 
 class Executive(object):
