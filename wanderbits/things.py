@@ -7,31 +7,33 @@ Things class for WanderBits, a text-based adventure game.
 """
 
 import abc
-import errors
+# import errors
 
 
 class Thing(object):
     """
     Things class for WanderBits, a text-based adventure game.
-    This class is a base class.  Inherit from this class to implement a particular game item.
+    This class is a base class.  Inherit from this class to implement
+    a particular game item.
     """
     property_keys = ['name', 'description']
 
     __metaclass__ = abc.ABCMeta
+
     @abc.abstractmethod
     def __init__(self, **kwargs):
         """
         Initialize Thing class.
-        Each kind of game item needs to be implemented as a subclass of the Thing base class.
+        Each kind of game item needs to be implemented as a subclass of
+        the Thing base class.
         """
         self._properties = {}
-        self.update_properties(property_keys, kwargs)
+        self.update_properties(self.property_keys, kwargs)
 
         # Other game Things may occupy the scope of a given Thing.
         self._scope_0 = []  # intimate
         self._scope_1 = []  # local
         self._scope_2 = []  # global
-
 
     def update_properties(self, property_keys, mapping):
         """
@@ -43,7 +45,6 @@ class Thing(object):
             except KeyError:
                 print(k)
                 raise
-
 
     @property
     def name(self):
@@ -63,7 +64,8 @@ class Thing(object):
 #################################################
 #################################################
 
-# nice discussion that clarifies inheriting from an abstract class and using super()
+# nice discussion that clarifies inheriting from an
+# abstract class and using super()
 # http://pymotw.com/2/abc/#concrete-methods-in-abcs
 
 class Room(Thing):
@@ -76,7 +78,6 @@ class Room(Thing):
         super(Room, self).__init__(**kwargs)
         self.update_properties(self.property_keys, kwargs)
 
-
     @property
     def connections(self):
         """
@@ -84,8 +85,8 @@ class Room(Thing):
         """
         return self._properties['connections']
 
-
 #################################################
+
 
 class Item(Thing):
     """
@@ -97,16 +98,33 @@ class Item(Thing):
         super(Room, self).__init__(**kwargs)
         self.update_properties(self.property_keys, kwargs)
 
+#################################################
+
+
+class User(Thing):
+    """
+    User object.
+    """
+    property_keys = ['capacity']
+
+    def __init__(self, **kwargs):
+        super(Room, self).__init__(**kwargs)
+        self.update_properties(self.property_keys, kwargs)
+
+#################################################
+
 
 if __name__ == '__main__':
+    """
+    Examples and ideas.
+    """
+
     info = {'name': 'closet',
             'description': 'sdfsdfsdfsdfdsfdsf',
             'size': 1000,
             'capacity': 10,
             'connections': {'west': 'den',
                             'east': 'livingroom'}
-                            }
-
+            }
 
     r = Room(**info)
-

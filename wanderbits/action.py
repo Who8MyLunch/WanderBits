@@ -7,13 +7,14 @@ Action class for WanderBits, a text-based adventure game.
 """
 
 import abc
-import errors
+# import errors
 
 
 class Action(object):
     """
     Action class for WanderBits, a text-based adventure game.
-    This class is a base class.  Inherit from this class to implement a particular game action.
+    This class is a base class.  Inherit from this class to implement a
+    particular game action.
     """
 
     __metaclass__ = abc.ABCMeta
@@ -24,11 +25,11 @@ class Action(object):
         Initialize Action class.
 
         Aliases allow for user-defined custom action names.
-        Each game action needs to be implemented as a subclass of the Action base class.
+        Each game action needs to be implemented as a subclass of the Action
+        base class.
         """
         # self._names = []
         pass
-
 
     @property
     def names(self):
@@ -37,12 +38,12 @@ class Action(object):
         """
         return self._names
 
-
     @abc.abstractmethod
     def apply(self, *args):
         """
         Do the work required for this action.
-        Each game action needs to be implemented as a subclass of the Action base class.
+        Each game action needs to be implemented as a subclass of the Action
+        base class.
         """
         pass
 
@@ -57,14 +58,12 @@ class Go(Action):
         """
         self._names = ['go'] + aliases
 
-
     def apply(self, *args):
         """
         Make the character go somewhere.
         """
         for a in args:
             print(a)
-
 
 
 class Look(Action):
@@ -75,15 +74,12 @@ class Look(Action):
         """
         self._names = ['look'] + aliases
 
-
-
     def apply(self, *args):
         """
         Look at something nearby.
         """
         for a in args:
             print(a)
-
 
 
 class Take(Action):
@@ -94,7 +90,6 @@ class Take(Action):
         """
         self._names = ['take'] + aliases
 
-
     def apply(self, *args):
         """
         Acquire something from local scope.
@@ -103,7 +98,5 @@ class Take(Action):
             print(a)
 
 
-
 if __name__ == '__main__':
     A = Go(['asd'])
-

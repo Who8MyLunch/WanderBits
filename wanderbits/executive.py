@@ -8,9 +8,9 @@ Executive class for WanderBits, a text-based adventure game.
 
 import sys
 
-import errors
+# import errors
 import line_parser
-import action
+# import action
 
 
 class Executive(object):
@@ -40,8 +40,6 @@ class Executive(object):
 
         # Done.
 
-
-
     def console_read(self):
         """
         Read a line of text from the user.  Block until user hits enter.
@@ -51,8 +49,6 @@ class Executive(object):
         line = self.stdin.readline()
 
         return line.strip()
-
-
 
     def console_reader(self):
         """
@@ -69,8 +65,6 @@ class Executive(object):
 
         # Done.
 
-
-
     def console_write(self, text):
         """
         Write some text out to the user.
@@ -79,11 +73,10 @@ class Executive(object):
 
         self.stdout.write(output)
 
-
-
     def start(self):
         """
-        Start running the Executive's event loop.  Block until user's game session is finished.
+        Start running the Executive's event loop.  Block until user's game
+        session is finished.
         """
 
         # Main loop.
@@ -99,7 +92,6 @@ class Executive(object):
             response = 'hello!!!! ' + action_name
             self.console_write(response)
 
-
         # Clean up, save game state, exit.
         # Save game state.
         self.console_write('Exit!\nSaving game state...')
@@ -110,13 +102,7 @@ class Executive(object):
         self.console_write('Bye.\n')
 
 
-
-
-
-
 if __name__ == '__main__':
-
 
     E = Executive()
     E.start()
-

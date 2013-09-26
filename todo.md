@@ -4,33 +4,39 @@ WanderBits To Do List
 
 Near-Term Tasks
 ---------------
-- Undo Console, move its functionality over to Executive
-- Think about how everything plugs into the Executive module.
-- Hook up Parser to Executive
-- Unit test for Executive.
-- Write the basic Thing class
-- Write the basic Action class
-
+- Implement Thing as container of other Things.
+- Implement User as subclass of Thing
+- Remove docopt dependence, replace with argparse
+- Think about how everything plugs into the Executive module
 
 Long Term
 ---------
-- Define layout for testing rooms
-- Define a few simple items
-- Serialize Things, Actions to YAML file.  Basis for defining game via config files.
-- Think about saving game progress.  serialize all stuff into a zip file.
+- Action unit tests
+- Thing unit tests
+- Finish Go Action function
+- Finish Get Action function
+- Finish Put Action function
+- Serialize Things and Actions to file.
+- Implement saving game progress.
 
 
 Research Topics
 ---------------
-- Need a source of words for room descriptions, item descriptions.  Response to actions, e.g. moving, taking, dropping...
-- ???? more to come.
-- How to handle door locks and keys??
 
 
 Finished Tasks
 --------------
+- How to handle door locks and keys??  Ignore for now.  Falls into category of opening/closing things.
+- Write the basic Thing class
+- Write the basic Action class
+- Unit test for Executive.
+- Define a few simple items
+- Define layout for testing rooms
+- Hook up Parser to Executive
+- Undo Console, move its functionality over to Executive
 - Hook up Console to Executive
-- Update Console class to provide a command prompt.  Manage line spacing between user input text and game response text.
+- Update Console class to provide a command prompt.
+- Manage line spacing between user input text and game response text.
 - Write the basic Executive module
 - Run a simple event loop
 - Think about sys.stdin, sys.stdout to manage IO with user, tied to Console class.

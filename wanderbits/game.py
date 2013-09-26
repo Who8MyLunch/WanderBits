@@ -2,8 +2,6 @@
 
 from __future__ import division, print_function, unicode_literals
 
-import docopt
-
 import executive
 
 
@@ -22,11 +20,9 @@ def main():
     """
 
     # Parse command line arguments.
-    args = docopt.docopt(main.__doc__)
+    # args = docopt.docopt(main.__doc__)
 
     # Load data from config files.
-
-
 
     E = executive.Executive()
 
@@ -36,8 +32,6 @@ def main():
     print('Goodbye!')
 
     # Done.
-
-
 
 if __name__ == '__main__':
     main()
