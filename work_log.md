@@ -2,14 +2,22 @@ WanderBits Work Log
 ===================
 This is a living document that will evolve as work progresses.
 
+Thursday Morning, Sept. 26, 2013
+--------------------------------
+Here we are getting close to the end.  The only class I have yet to make progress on is the `Thing` class.  This class is also potentially the most complicated of all.  An abstract `Thing` has relationships with other `Things`.  The nature of the relationship defines restrictions on whether or not a given `Action` has access to a `Thing`.  Relationships may or may not be reciprocal.  If `Thing` A is within the local scope of `Thing` B, then `Thing` B is also within the local scope of `Thing` A.   However, if A is inside of B, the reverse is _not_ possible.  Occupying one scope may also imply occupying other higher-level scopes.
+
+1. **Intimate**: This scope is used to convey being attached to another item, inside another item, or on top of another item.  This implies a physical connection.  A `Thing`'s physical location is determined by it's intimate relationship with another `Thing`.  An apple `Thing` may be within the intimate scope of a box `Thing`, the box `Thing` may in turn be within the instimate scope of a room `Thing`.  An object may only occupy one other object's intimate scope.  Multiple objects may occupy a given object''s intimate scope.  If A is within B's intimate scope, then B is defined to be within A's _local_ scope.  Intimate scope is not reciprocal.
+
+2. **Local**: This scope is one layer up from the intimate scope.  This scope does not imply physical contact, but it does imply being observable.  One may physically manipulate (e.g. take, eat) other `Things` within the local scope.  Local scope is reciprocal.
+
+3. **Global**: This scope is automatically implied between all existing in-game `Things`.  If a `Thing` is destroyed, it will no longer exist within any other `Thing`'s global scope.  Global scope is reciprocal.
+
 
 Wednesday Afternoon, Sept. 25, 2013
 -----------------------------------
 Before going further with `Executive` I am going to implement an `Action` class.  What is an `Action`?  It controls how change happens in the game.  The user enters a valid command, and this is translated into an `Action`.  The arguments that follow the action verb on the command line are given to the matching `Action` instance.  The `Action` in turn then does whatever is needed to realize the user's command.  The arguments correspond to: objects that are within reach of the user, allowed navigation directions, more?
 
 There could potentially be a large number of game `Actions`.  I think now that it will work best if each kind of `Action` inherits from a base `Action` class.  I am also going to take this opportunity to use the Python Abstract Base Class feature.  I've seen it before but never used it.  This seems like a good time!
-
-
 
 
 Wednesday Morning, Sept. 25, 2013
