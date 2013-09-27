@@ -44,7 +44,6 @@ class Test_Executive(unittest.TestCase):
     def test_write_two_lines(self):
         line_1 = 'hello to the test'
         line_2 = 'good day to the world!'
-        # lines = '{:s}\n{:s}\n'.format(line_1, line_2)
 
         buff_in = StringIO.StringIO()
         buff_out = StringIO.StringIO()

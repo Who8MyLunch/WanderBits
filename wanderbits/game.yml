@@ -1,36 +1,58 @@
+
+
+user:
+  - name: SpaceCadet
+    description: I need more candies for the program!
+    size: 10
+    capacity: 100
+    start: kitchen
+
+
 rooms:
     - name: kitchen
       description: An average-looking kitchen.  It looks very tidy
+      size: 1000
+      capacity: 1000
       connections:
         east: livingroom
         west: den
 
     - name: den
       description: A cozy den with lots of books on the shelves
+      size: 1000
+      capacity: 1000
       connections:
         down: tunnel
         north: bedroom
 
     - name: bedroom
       description: A messy bedroom with toys and clothes all over the floor
+      size: 1000
+      capacity: 1000
       connections:
         south: den
         east: kitchen
 
     - name: livingroom
       description: A nice room for family chit chat
+      size: 1000
+      capacity: 1000
       connections:
         west: kitchen
         down: tunnel
 
     - name: tunnel
       description: A dark tunnel running east to west
+      size: 1000
+      capacity: 1000
       connections:
         west: den
         east: livingroom
 
     - name: attic
       description: A dark storage area above the bedroom
+      size: 1000
+      capacity: 1000
       connections:
         down: bedroom
 
@@ -71,10 +93,3 @@ actions:
   - name: quit
     description: to stop the game
     aliases: [exit, end]
-
-
-user:
-  - name: SpaceJunkie
-    description: I need more candies for the program!
-    capacity: 100
-    start: kitchen

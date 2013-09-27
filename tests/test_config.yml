@@ -1,11 +1,22 @@
+user:
+  - name: SpaceCadet
+    description: I need more candies for the program!
+    size: 10
+    capacity: 5
+    start: kitchen
+
 rooms:
     - name: kitchen
       description: An average-looking kitchen.  It looks very tidy
+      size: 1000
+      capacity: 1000
       connections:
         west: den
 
     - name: den
       description: A cozy den with lots of books on the shelves
+      size: 1000
+      capacity: 1000
       connections:
         north: kitchen
 
@@ -40,10 +51,3 @@ actions:
   - name: quit
     description: to stop the game
     aliases: [exit, end]
-
-
-user:
-  - name: SpaceJunkie
-    description: I need more candies for the program!
-    capacity: 100
-    start: kitchen

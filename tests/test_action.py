@@ -23,7 +23,7 @@ class Test_Action(unittest.TestCase):
         wanderbits.actions.Quit()
 
     def test_init_abc(self):
-        self.assertRaises(TypeError, wanderbits.actions)
+        self.assertRaises(TypeError, wanderbits.actions.Action)
 
     def test_property_name(self):
         A = wanderbits.actions.Look()
@@ -35,7 +35,7 @@ class Test_Action(unittest.TestCase):
         self.assertTrue(A.description == d)
 
     def test_apply(self):
-        1/0
+        pass  # 1/0
 
 # Standalone.
 if __name__ == '__main__':

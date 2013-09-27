@@ -46,12 +46,16 @@ class Thing(object):
         self.update_properties(base_property_keys, kwargs)
 
         # Other game Things will occupy this Thing's various scopes
-        self._scope_0 = []  # intimate
-        self._scope_1 = []  # local
-        self._scope_2 = []  # global
+        # self._scope_0 = []  # intimate
+        # self._scope_1 = []  # local
+        # self._scope_2 = []  # global
+        self._container = []
 
         # Which Thing contains the current Thing.
         self._parent = None
+
+    def __repr__(self):
+        return 'Thing [{:s}]'.format(self.name)
 
     def update_properties(self, property_keys, mapping):
         """
@@ -79,23 +83,68 @@ class Thing(object):
         """
         return self._properties['description']
 
+    @property
+    def size(self):
+        """
+        This Thing's physical size.
+        """
+        try:
+            return self._properties['size']
+        except KeyError:
+            return 0
+            # msg = 'Thing hasn't a size: {:s}'.format(self.name)
+            # raise errors.ThingError(msg)
+
+    @property
+    def capacity(self):
+        """
+        This Thing's physical size.
+        """
+        try:
+            return self._properties['capacity']
+        except KeyError:
+            return 0
+            # msg = 'Thing hasn't a capacity: {:s}'.format(self.name)
+            # raise errors.ThingError(msg)
+
     def add(self, obj):
         """
-        Place an object inside oneself.
+        Place object inside oneself.
         """
-        self._container.add(obj)
+        if obj in self._container:
+            msg = 'Object already inside container: {:s}'.format(str(obj))
+            raise errors.ThingError(msg)
+
+        self._container.append(obj)
 
     def remove(self, obj):
         """
-        Remove an object from oneself.
+        Remove object from oneself.
         """
-        self._container.pop(obj)
+        return self._container.pop(obj)
+
+    @property
+    def container(self):
+        """
+        A list of Things contained by this Thing.
+        """
+        return self._container
+
+    @property
+    def available_space(self):
+        """
+        Amount of space inside this Thing available for storing more Things.
+        """
+        s = 0
+        for T in self._container:
+            s += T.size
+
 
 #################################################
 #################################################
 
-# nice discussion that clarifies inheriting from an
-# abstract class and using super()
+# nice discussion that clarifies inheriting from an abstract class and
+# using also using super():
 # http://pymotw.com/2/abc/#concrete-methods-in-abcs
 
 
@@ -103,7 +152,7 @@ class Room(Thing):
     """
     Room object.
     """
-    property_keys = ['connections']
+    property_keys = ['connections', 'size', 'capacity']
 
     def __init__(self, **kwargs):
         super(Room, self).__init__(**kwargs)
@@ -136,7 +185,7 @@ class User(Thing):
     """
     User object.
     """
-    property_keys = ['capacity']
+    property_keys = ['size', 'capacity']
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -146,16 +195,4 @@ class User(Thing):
 
 
 if __name__ == '__main__':
-    """
-    Examples and ideas.
-    """
-
-    info = {'name': 'closet',
-            'description': 'sdfsdfsdfsdfdsfdsf',
-            'size': 1000,
-            'capacity': 10,
-            'connections': {'west': 'den',
-                            'east': 'livingroom'}
-            }
-
-    r = Room(**info)
+    pass

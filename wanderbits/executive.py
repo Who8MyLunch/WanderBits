@@ -93,13 +93,13 @@ class Executive(object):
             if self.verbose:
                 print('item: {:s}, {:s}'.format(item.name, item.description))
 
-        # Create user object.
+        # Create user object(s).
         for info in game_info['user']:
             self._user = things.User(verbose=self.verbose, **info)
 
             # Place user in a room.
             room_start = things.find_thing(self._rooms, info['start'])
-            room_start.add(item)
+            room_start.add(self._user)
 
             if self.verbose:
                 print('user: {:s}, {:s}'.format(self._user.name,
