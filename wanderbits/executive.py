@@ -87,9 +87,8 @@ class Executive(object):
             # Get action sub-class from action module.
             Action_obj = getattr(action, name.lower().title())
 
-            # Instantiate this Action class.
+            # Instantiate Action class.
             instance = Action_obj(aliases)
-
             self._actions.append(instance)
 
             if verbose:
