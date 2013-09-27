@@ -37,6 +37,8 @@ class Test_Things(unittest.TestCase):
     def test_init_abc(self):
         self.assertRaises(TypeError, wanderbits.things.Thing)
 
+    #############################################
+    # Test for property values.
     def test_property_name(self):
         info = self.game_info['rooms'][0]
         A = wanderbits.things.Room(**info)
@@ -58,6 +60,8 @@ class Test_Things(unittest.TestCase):
         A = wanderbits.things.Room(**info)
         self.assertTrue(A.capacity == 1000)
 
+    #############################################
+    # Test for container actions.
     def test_add_is_container(self):
         info_apple = self.game_info['items'][0]
         A = wanderbits.things.Item(**info_apple)
@@ -65,10 +69,67 @@ class Test_Things(unittest.TestCase):
         info_sack = self.game_info['items'][1]
         B = wanderbits.things.Item(**info_sack)
 
+        # Put the apple in the sack.
         B.add(A)
 
+        self.assertTrue(A in B.container)
+
+    def test_add_item_twice(self):
+        info_apple = self.game_info['items'][0]
+        A = wanderbits.things.Item(**info_apple)
+
+        info_sack = self.game_info['items'][1]
+        B = wanderbits.things.Item(**info_sack)
+
+        # Put the apple in the sack.
+        B.add(A)
+
+        # B.add(A)
+        # Put the apple in the sack again.  I know!  This is a dumb rule!
+        self.assertRaises(wanderbits.errors.ThingError, B.add, A)
+
+    def test_add_is_not_container(self):
+        info_apple = self.game_info['items'][0]
+        A = wanderbits.things.Item(**info_apple)
+
+        info_sack = self.game_info['items'][1]
+        B = wanderbits.things.Item(**info_sack)
+
+        # Put the sack in the apple.
+        # A.add(B)
+        self.assertRaises(wanderbits.errors.ThingError, A.add, B)
+
+    def test_available_space_init(self):
+        info_sack = self.game_info['items'][1]
+        B = wanderbits.things.Item(**info_sack)
+
+        self.assertTrue(B.available_space == 100)
+
+    def test_available_space_after_add(self):
+        info_apple = self.game_info['items'][0]
+        A = wanderbits.things.Item(**info_apple)
+
+        info_sack = self.game_info['items'][1]
+        B = wanderbits.things.Item(**info_sack)
+
+        B.add(A)
+        self.assertTrue(B.available_space == 99)
+
     def test_remove(self):
-        pass  # 1/0
+        info_apple = self.game_info['items'][0]
+        A = wanderbits.things.Item(**info_apple)
+
+        info_sack = self.game_info['items'][1]
+        B = wanderbits.things.Item(**info_sack)
+
+        B.add(A)
+        self.assertTrue(A in B.container)
+
+        B.remove(A)
+        self.assertTrue(A not in B.container)
+
+        # B.remove(A)
+        self.assertRaises(wanderbits.errors.ThingError, B.remove, A)
 
 
 # Standalone.

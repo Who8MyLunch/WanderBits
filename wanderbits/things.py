@@ -112,7 +112,11 @@ class Thing(object):
         Place object inside oneself.
         """
         if obj in self._container:
-            msg = 'Object already inside container: {:s}'.format(str(obj))
+            msg = '{:s} already contains {:s}'.format(self, obj)
+            raise errors.ThingError(msg)
+
+        if self.available_space < obj.size:
+            msg = 'Not enough room in {:s} to contain {:s}'.format(self, obj)
             raise errors.ThingError(msg)
 
         self._container.append(obj)
@@ -121,7 +125,11 @@ class Thing(object):
         """
         Remove object from oneself.
         """
-        return self._container.pop(obj)
+        try:
+            return self._container.remove(obj)
+        except ValueError:
+            msg = '{:s} does not contains {:s}'.format(self, obj)
+            raise errors.ThingError(msg)
 
     @property
     def container(self):
@@ -135,10 +143,10 @@ class Thing(object):
         """
         Amount of space inside this Thing available for storing more Things.
         """
-        s = 0
+        contained_size = 0
         for T in self._container:
-            s += T.size
-
+            contained_size += T.size
+        return self.capacity - contained_size
 
 #################################################
 #################################################
