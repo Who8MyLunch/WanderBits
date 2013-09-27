@@ -25,7 +25,6 @@ class Test_Action(unittest.TestCase):
     def test_init_abc(self):
         self.assertRaises(TypeError, wanderbits.actions)
 
-
     def test_property_name(self):
         A = wanderbits.actions.Look()
         self.assertTrue('look' in A.names)
@@ -34,6 +33,9 @@ class Test_Action(unittest.TestCase):
         d = 'hello a test is here'
         A = wanderbits.actions.Look(description=d)
         self.assertTrue(A.description == d)
+
+    def test_apply(self):
+        1/0
 
 # Standalone.
 if __name__ == '__main__':

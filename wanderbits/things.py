@@ -7,7 +7,21 @@ Things class for WanderBits, a text-based adventure game.
 """
 
 import abc
-# import errors
+import errors
+
+
+# Helpers
+def find_thing(many_things, name):
+    """
+    Find a matching Thing.
+    """
+    for t in many_things:
+        if t.name == name:
+            return t
+
+    raise errors.ThingError('Unable to find matching Thing: {:s}'.format(name))
+
+#################################################
 
 
 class Thing(object):
@@ -31,10 +45,13 @@ class Thing(object):
         self._properties = {}
         self.update_properties(base_property_keys, kwargs)
 
-        # Other game Things may occupy the scope of a given Thing.
+        # Other game Things will occupy this Thing's various scopes
         self._scope_0 = []  # intimate
         self._scope_1 = []  # local
         self._scope_2 = []  # global
+
+        # Which Thing contains the current Thing.
+        self._parent = None
 
     def update_properties(self, property_keys, mapping):
         """
@@ -61,6 +78,18 @@ class Thing(object):
         This Thing's description.
         """
         return self._properties['description']
+
+    def add(self, obj):
+        """
+        Place an object inside oneself.
+        """
+        self._container.add(obj)
+
+    def remove(self, obj):
+        """
+        Remove an object from oneself.
+        """
+        self._container.pop(obj)
 
 #################################################
 #################################################

@@ -73,27 +73,37 @@ class Executive(object):
         config files.
         """
         # Create game rooms.
-        for a in game_info['rooms']:
-            room = things.Room(verbose=self.verbose, **a)
+        for info in game_info['rooms']:
+            room = things.Room(verbose=self.verbose, **info)
             self._rooms.append(room)
 
             if self.verbose:
                 print('room: {:s}, {:s}'.format(room.name, room.description))
 
         # Create game items.
-        for a in game_info['items']:
-            item = things.Item(verbose=self.verbose, **a)
+        for info in game_info['items']:
+            item = things.Item(verbose=self.verbose, **info)
+
+            # Place item in a room.
+            room_start = things.find_thing(self._rooms, info['start'])
+            room_start.add(item)
+
             self._items.append(item)
 
             if self.verbose:
                 print('item: {:s}, {:s}'.format(item.name, item.description))
 
         # Create user object.
-        for a in game_info['user']:
-            self._user = things.User(verbose=self.verbose, **a)
+        for info in game_info['user']:
+            self._user = things.User(verbose=self.verbose, **info)
+
+            # Place user in a room.
+            room_start = things.find_thing(self._rooms, info['start'])
+            room_start.add(item)
 
             if self.verbose:
-                print('item: {:s}, {:s}'.format(item.name, item.description))
+                print('user: {:s}, {:s}'.format(self._user.name,
+                                                self._user.description))
 
         # Create game actions.
         for action_info in game_info['actions']:
@@ -111,7 +121,7 @@ class Executive(object):
                       action.description))
 
     #############################################
-    # Console read/write
+    # Input and output to user console.
     def console_read(self):
         """
         Read a line of text from the user.  Block until user hits enter.
@@ -174,10 +184,9 @@ class Executive(object):
 
                 # Take action!
                 game_action = self.find_action(user_action_name)
-                game_action.apply(user_arguments)
+                response = game_action.apply(self._user, *user_arguments)
 
                 # Send response to user.
-                response = 'hello!!!! ' + user_action_name
                 self.console_write(response)
 
         except errors.GameError as e:

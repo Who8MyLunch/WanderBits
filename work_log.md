@@ -10,7 +10,8 @@ Ok.  This evening it feels like I am rushing through my work.  I've done lots of
 
 The next big feature to add is the concept of a `Thing` being contained inside another `Thing`.  This will enable the `User` class to have a sense of location in a room.  The first `Action` to hook up after the container feature will be the `Look` action.
 
-I have added new unit tests for the major feature I added today.  I'm getting pretty tired!
+I have added new unit tests for the major feature I added today.  I'm getting pretty tired!  I connected the response output from each action to the user's console display.
+
 
 Thursday Morning, Sept. 26, 2013
 --------------------------------

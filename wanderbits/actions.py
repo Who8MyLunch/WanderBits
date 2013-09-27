@@ -48,7 +48,7 @@ class Action(object):
         return self._description
 
     @abc.abstractmethod
-    def apply(self, *args):
+    def apply(self, user, *args):
         """
         Do the work required for this action.
         Each game action needs to be implemented as a subclass of the Action
@@ -68,13 +68,15 @@ class Go(Action):
         self._names = ['go'] + aliases
         self._description = description
 
-    def apply(self, *args):
+    def apply(self, user, *args):
         """
         Make the character go somewhere.
         """
         print('apply')
         for a in args:
             print(a)
+
+        return 'measfdasfda'
 
 
 class Look(Action):
@@ -86,13 +88,15 @@ class Look(Action):
         self._names = ['look'] + aliases
         self._description = description
 
-    def apply(self, *args):
+    def apply(self, user, *args):
         """
         Look at something nearby.
         """
         print('apply')
         for a in args:
             print(a)
+
+        return 'measfdasfda'
 
 
 class Take(Action):
@@ -104,13 +108,15 @@ class Take(Action):
         self._names = ['take'] + aliases
         self._description = description
 
-    def apply(self, *args):
+    def apply(self, user, *args):
         """
         Acquire something from local scope.
         """
         print('apply')
         for a in args:
             print(a)
+
+        return 'measfdasfda'
 
 
 class Put(Action):
@@ -122,13 +128,15 @@ class Put(Action):
         self._names = ['put'] + aliases
         self._description = description
 
-    def apply(self, *args):
+    def apply(self, user, *args):
         """
         Acquire something from local scope.
         """
         print('apply')
         for a in args:
             print(a)
+
+        return 'measfdasfda'
 
 
 class Quit(Action):
@@ -140,13 +148,15 @@ class Quit(Action):
         self._names = ['quit'] + aliases
         self._description = description
 
-    def apply(self, *args):
+    def apply(self, user, *args):
         """
         Acquire something from local scope.
         """
         print('apply')
         for a in args:
             print(a)
+
+        return 'measfdasfda'
 
 
 if __name__ == '__main__':
