@@ -4,22 +4,22 @@ WanderBits To Do List
 
 Near-Term Tasks
 ---------------
-- Implement Get Action function
-- Implement Put Action function
 - Implement Go Action function
+- Implement Take Action function
+- Implement Put Action function
 
 
 Long Term
 ---------
-- Update item & room descriptions in config file
 - After read config data, verify all data is valid
-- Thing unit tests
-- Serialize Things and Actions to file
 - Implement saving game progress
 
 
 Finished Tasks
 --------------
+- Thing unit tests
+- Update item & room descriptions in config file
+- Placeholder for Take and Put actions.
 - Update Action unit tests for apply
 - Implement Look action
 - Handle invalid game actions.

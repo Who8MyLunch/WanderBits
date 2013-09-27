@@ -10,7 +10,7 @@ user:
 
 rooms:
     - name: kitchen
-      description: 'a very tidy average-looking kitchen'
+      description: a very tidy average-looking kitchen
       size: 1000
       capacity: 1000
       connections:

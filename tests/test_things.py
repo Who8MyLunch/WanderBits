@@ -50,7 +50,7 @@ class Test_Things(unittest.TestCase):
     def test_property_description(self):
         info = self.game_info['rooms'][0]
         A = wanderbits.things.Room(**info)
-        txt = 'An average-looking kitchen.  It looks very tidy'
+        txt = 'a very tidy average-looking kitchen'
         self.assertTrue(A.description == txt)
 
     def test_property_size(self):

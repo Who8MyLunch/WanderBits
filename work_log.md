@@ -5,7 +5,7 @@ Friday Afternoon, Sept. 27, 2013
 --------------------------------
 The project is almost done.  I will spend a few minutes right now hooking up the last parts of the `Look` action.  Then I will update the unit tests.  Then see about a few more actions.  Then put together a writeup.
 
-I finally got the Look action working.
+I finally got the Look action working.  I have added silly placeholder actions for `Put` and `Take` actions.  I'm going to work now on a description of my design decisions.  This log file should help out a lot.
 
 
 Friday Morning, Sept. 27, 2013

@@ -98,11 +98,9 @@ class Go(Action):
         """
         Make the character go somewhere.
         """
-        print('apply')
-        for a in args:
-            print(a)
 
-        return 'measfdasfda'
+        # TODO: get room object, verify target direction is valid, remove user
+        # from current room, add to target room, issue Look command.
 
 
 class Look(Action):
@@ -151,7 +149,10 @@ class Look(Action):
             names = [t.name for t in thing_targ.container[:-1]]
             extra = ', '.join(names) + ' and ' + thing_targ.container[-1].name
         elif num_inside == 2:
-            extra = thing_targ.container[0].name + ' and ' + thing_targ.container[1].name
+            n1 = thing_targ.container[0].name
+            n2 = thing_targ.container[1].name
+            extra = n1 + ' and ' + n2
+
         elif num_inside == 1:
             extra = thing_targ.container[0].name
 
@@ -175,11 +176,20 @@ class Take(Action):
         """
         Acquire something from local scope.
         """
-        print('apply')
-        for a in args:
-            print(a)
 
-        return 'measfdasfda'
+        # TODO: search for item, try to add to user's container.  if error
+        # message back that can't get that thing.
+
+        if args:
+            response = 'You try as best you can to pick up "{:s}", but ' + \
+                       'alas your muscles have atrophied due to lack of ' + \
+                       'excersise on your last trip to Outer Space.'
+            response = response.format(args[0])
+
+        else:
+            response = 'Take what?!  What do you mean?'
+
+        return response
 
 
 class Put(Action):
@@ -192,16 +202,17 @@ class Put(Action):
         self._names = ['put'] + aliases
         self._description = description
 
-    def apply(self, user, *args):
+    def apply(self, *args):
         """
         Acquire something from local scope.
         """
-        print('apply')
-        for a in args:
-            print(a)
 
-        return 'measfdasfda'
+        # TODO: verify target item is in our possession, remove from user,
+        # add to room.
 
+        response = 'That seems like a lot of work.  Please try again.'
+
+        return response
 
 class Help(Action):
 
