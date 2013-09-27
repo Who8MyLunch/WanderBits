@@ -13,7 +13,7 @@ import cStringIO as StringIO
 class Test_Executive(unittest.TestCase):
 
     def setUp(self):
-        f = 'test_config.yml'
+        f = '../wanderbits/game.yml'
         self.game_info = wanderbits.config.read(f)
 
     def tearDown(self):
@@ -85,8 +85,8 @@ class Test_Executive(unittest.TestCase):
     def test_ingest_data(self):
         E = wanderbits.executive.Executive(self.game_info)
 
-        self.assertTrue(len(E._rooms) == 2)
-        self.assertTrue(len(E._items) == 2)
+        self.assertTrue(len(E._rooms) == 6)
+        self.assertTrue(len(E._items) == 4)
         self.assertTrue(len(E._actions) == 4)
 
     def test_ingested_types(self):

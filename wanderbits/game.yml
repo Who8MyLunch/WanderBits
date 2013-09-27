@@ -70,6 +70,12 @@ items:
       capacity: 100
       start: kitchen
 
+    - name: rock
+      description: a small dirt rock
+      size: 1
+      capacity: 0
+      start: den
+
     - name: hatchet
       description: a wicked little axe
       size: 2
