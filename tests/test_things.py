@@ -131,12 +131,27 @@ class Test_Things(unittest.TestCase):
         # B.remove(A)
         self.assertRaises(wanderbits.errors.ThingError, B.remove, A)
 
-
     #############################################
     # User as a container.
     def test_user_local_things(self):
         E = wanderbits.executive.Executive(self.game_info)
 
+        info_apple = self.game_info['items'][0]
+        A = wanderbits.things.Item(**info_apple)
+
+        info_sack = self.game_info['items'][1]
+        B = wanderbits.things.Item(**info_sack)
+
+        info_room = self.game_info['rooms'][0]
+        C = wanderbits.things.Item(**info_room)
+
+        info_rock = self.game_info['items'][2]
+        D = wanderbits.things.Item(**info_rock)
+
+        self.assertTrue(A.name in [n.name for n in E.user.local_things])
+        self.assertTrue(B.name in [n.name for n in E.user.local_things])
+        self.assertTrue(C.name in [n.name for n in E.user.local_things])
+        self.assertFalse(D.name in [n.name for n in E.user.local_things])
 
 # Standalone.
 if __name__ == '__main__':

@@ -97,7 +97,7 @@ class Look(Action):
         if not args:
             # Default to look at the room.
             args = ['room']
-l
+
         target = args[0]
         # Find Things at which to look, assuming target is name of a thing
 

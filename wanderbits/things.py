@@ -222,6 +222,7 @@ class User(Thing):
         super(User, self).__init__(**kwargs)
         self.update_properties(self.property_keys, kwargs)
 
+    @property
     def local_things(self):
         """
         Return list of Things that are nearby.
@@ -230,8 +231,15 @@ class User(Thing):
         by the user.  Does not include Things inside Things held
         by the user.
         """
+        # User should be contained by a room.
         room = self.parent
+
+        # List of things.
         things = [room] + room.container + self.container
+
+        # Remove self from list.
+        things.remove(self)
+
         return things
 
 #################################################
