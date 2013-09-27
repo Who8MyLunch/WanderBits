@@ -20,7 +20,7 @@ def find_thing(many_things, name):
         raise errors.ThingError(msg)
 
     for t in many_things:
-        if t.name == name:
+        if t.name.lower() == name.lower():
             return t
 
     msg = 'Unable to find matching Thing: {:s}'.format(name)
@@ -60,8 +60,7 @@ class Thing(object):
         return 'Thing [{:s}]'.format(self.name)
 
     def update_properties(self, property_keys, mapping):
-        """
-        Update this Thing's inherent property values.
+        """Update this Thing's inherent property values.
         """
         for k in property_keys:
             try:
@@ -73,22 +72,25 @@ class Thing(object):
 
     @property
     def name(self):
-        """
-        This Thing's characteristic name.
+        """This Thing's characteristic name.
         """
         return self._properties['name']
 
     @property
-    def description(self):
+    def kind(self):
+        """This Thing's characteristic kind of thing.
         """
-        This Thing's description.
+        return self._properties['kind']
+
+    @property
+    def description(self):
+        """This Thing's description.
         """
         return self._properties['description']
 
     @property
     def size(self):
-        """
-        This Thing's physical size.
+        """This Thing's physical size.
         """
         try:
             return self._properties['size']
@@ -99,8 +101,7 @@ class Thing(object):
 
     @property
     def capacity(self):
-        """
-        This Thing's physical size.
+        """This Thing's physical size.
         """
         try:
             return self._properties['capacity']
@@ -111,8 +112,7 @@ class Thing(object):
 
     @property
     def parent(self):
-        """
-        Another Thing that contains self.
+        """Another Thing that contains self.
         """
         return self._parent
 
@@ -126,8 +126,7 @@ class Thing(object):
             raise errors.ThingError(msg)
 
     def add(self, obj):
-        """
-        Place new object inside oneself.
+        """Place new object inside oneself.
         """
         if not isinstance(obj, Thing):
             msg = 'Object must be a Thing: {:s}'.format(str(obj))
@@ -146,8 +145,7 @@ class Thing(object):
         obj.parent = self
 
     def remove(self, obj):
-        """
-        Remove object from oneself.
+        """Remove object from oneself.
         """
         try:
             # Remove from container, remove self as parent.
@@ -161,15 +159,13 @@ class Thing(object):
 
     @property
     def container(self):
-        """
-        A list of Things contained by this Thing.
+        """A list of Things contained by this Thing.
         """
         return self._container
 
     @property
     def available_space(self):
-        """
-        Amount of space inside this Thing available for storing more Things.
+        """Amount of space inside this Thing available for storing more Things.
         """
         contained_size = 0
         for T in self._container:
@@ -185,14 +181,14 @@ class Thing(object):
 
 
 class Room(Thing):
-    """
-    Room object.
+    """Room object.
     """
     property_keys = ['connections', 'size', 'capacity']
 
     def __init__(self, **kwargs):
         super(Room, self).__init__(**kwargs)
         self.update_properties(self.property_keys, kwargs)
+        self.update_properties(['kind'], {'kind': 'room'})
 
     @property
     def connections(self):
@@ -205,27 +201,27 @@ class Room(Thing):
 
 
 class Item(Thing):
-    """
-    Item object.
+    """Item object.
     """
     property_keys = ['size', 'capacity']
 
     def __init__(self, **kwargs):
         super(Item, self).__init__(**kwargs)
         self.update_properties(self.property_keys, kwargs)
+        self.update_properties(['kind'], {'kind': 'item'})
 
 #################################################
 
 
 class User(Thing):
-    """
-    User object.
+    """User object.
     """
     property_keys = ['size', 'capacity']
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         self.update_properties(self.property_keys, kwargs)
+        self.update_properties(['kind'], {'kind': 'user'})
 
     @property
     def local_things(self):
@@ -243,7 +239,7 @@ class User(Thing):
         things = [room] + room.container + self.container
 
         # Remove self from list.
-        things.remove(self)
+        # things.remove(self)
 
         return things
 

@@ -38,9 +38,6 @@ class Test_Basic_Action(unittest.TestCase):
         A = wanderbits.actions.Look(user_placeholder, description=d)
         self.assertTrue(A.description == d)
 
-    def test_apply(self):
-        pass  # 1/0
-
 
 class Test_Action_Look(unittest.TestCase):
 
@@ -56,7 +53,11 @@ class Test_Action_Look(unittest.TestCase):
         E = wanderbits.executive.Executive(self.game_info)
 
         A_look = wanderbits.actions.find_action(E.actions, 'look')
-        print(A_look)
+        response = A_look.apply()
+
+        resp_true = 'You see a very tidy average-looking kitchen.'
+        self.assertTrue(resp_true in response)
+
 # Standalone.
 if __name__ == '__main__':
     unittest.main(verbosity=2)

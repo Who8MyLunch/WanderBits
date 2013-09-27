@@ -2,7 +2,7 @@
 
 user:
   - name: SpaceCadet
-    description: I need more candies for the program!
+    description: a bright fellow eager to work with other SpaceCadets
     size: 10
     capacity: 100
     start: kitchen
@@ -10,7 +10,7 @@ user:
 
 rooms:
     - name: kitchen
-      description: An average-looking kitchen.  It looks very tidy
+      description: 'a very tidy average-looking kitchen'
       size: 1000
       capacity: 1000
       connections:
@@ -18,7 +18,7 @@ rooms:
         west: den
 
     - name: den
-      description: A cozy den with lots of books on the shelves
+      description: a cozy den with lots of books on the shelves
       size: 1000
       capacity: 1000
       connections:
@@ -26,7 +26,7 @@ rooms:
         north: bedroom
 
     - name: bedroom
-      description: A messy bedroom with toys and clothes all over the floor
+      description: a messy bedroom with toys and clothes all over the floor
       size: 1000
       capacity: 1000
       connections:
@@ -34,7 +34,7 @@ rooms:
         east: kitchen
 
     - name: livingroom
-      description: A nice room for family chit chat
+      description: a nice room for family chit chat
       size: 1000
       capacity: 1000
       connections:
@@ -42,7 +42,7 @@ rooms:
         down: tunnel
 
     - name: tunnel
-      description: A dark tunnel running east to west
+      description: a dark tunnel running east to west
       size: 1000
       capacity: 1000
       connections:
@@ -50,7 +50,7 @@ rooms:
         east: livingroom
 
     - name: attic
-      description: A dark storage area above the bedroom
+      description: a dark storage area above the bedroom
       size: 1000
       capacity: 1000
       connections:

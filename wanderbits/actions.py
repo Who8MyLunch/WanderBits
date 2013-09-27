@@ -119,26 +119,46 @@ class Look(Action):
         """
         Look at something nearby.
         Take first argument as action target.
+        Accept a string name or an Item instance.
         Default to looking at current room if no args supplied.
         """
         if not args:
-            # Default to look at the room.
-            args = ['room']
+            # Default is to look at the room the user is inside.
+            args = [self.user.parent.name]
 
-        # Find Things at which to look, assuming argument is name of a thing.
+        # Consider first argument as target for looking.
         target = args[0]
-        try:
-            # Search through user-local things by name.
-            target_thing = things.find_thing(self.user.local_things, target)
-        except errors.FindThingError:
-            pass
+        if isinstance(target, things.Item):
+            thing_targ = target
+        elif isinstance(target, basestring):
+            # Search local area for Item with matching name.
+            try:
+                thing_targ = things.find_thing(self.user.local_things, target)
+            except errors.FindThingError:
+                msg = "There isn't a '{:s}' nearby ".format(target)
+                raise errors.ApplyActionError(msg)
+        else:
+            msg = "I don't know what to do with: {:s}".format(target)
+            raise errors.ApplyActionError(msg)
 
-        print('apply')
-        print(target_thing)
-        for a in args:
-            print(a)
+        # Gather up Items that inside the target Thing.
+        response = 'You see {:s}.'.format(thing_targ.description)
 
-        return 'measfdasfda'
+        # Build up nice string of the extra stuff also found here.
+        extra = None
+        num_inside = len(thing_targ.container)
+        if num_inside > 2:
+            names = [t.name for t in thing_targ.container[:-1]]
+            extra = ', '.join(names) + ' and ' + thing_targ.container[-1].name
+        elif num_inside == 2:
+            extra = thing_targ.container[0].name + ' and ' + thing_targ.container[1].name
+        elif num_inside == 1:
+            extra = thing_targ.container[0].name
+
+        if extra:
+            response += '\nThe room also contains ' + extra + '.'
+
+        return response
 
 
 class Take(Action):

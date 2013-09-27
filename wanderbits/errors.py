@@ -31,7 +31,7 @@ class FindActionError(ActionError):
     pass
 
 
-class LookActionError(ActionError):
+class ApplyActionError(ActionError):
     pass
 
 

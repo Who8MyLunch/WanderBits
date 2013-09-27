@@ -218,6 +218,10 @@ class Executive(object):
                     # catch when user supplied word is not a valid action.
                     response = e.message
 
+                except errors.ApplyActionError as e:
+                    # Problem performing desired action.
+                    response = e.message
+
                 # Send response to user.
                 self.console_write(response)
 

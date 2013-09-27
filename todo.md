@@ -4,9 +4,6 @@ WanderBits To Do List
 
 Near-Term Tasks
 ---------------
-- Implement Look action
-- Update Action unit tests for apply
-- Update Action unit tests for transactions
 - Implement Get Action function
 - Implement Put Action function
 - Implement Go Action function
@@ -23,6 +20,8 @@ Long Term
 
 Finished Tasks
 --------------
+- Update Action unit tests for apply
+- Implement Look action
 - Handle invalid game actions.
 - Update Action unit tests for add, remove
 - Implement Thing as container of other Things
