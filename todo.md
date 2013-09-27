@@ -4,9 +4,9 @@ WanderBits To Do List
 
 Near-Term Tasks
 ---------------
+- Implement Look action
 - Update Action unit tests for apply
 - Update Action unit tests for transactions
-- Implement Look action
 - Implement Get Action function
 - Implement Put Action function
 - Implement Go Action function
