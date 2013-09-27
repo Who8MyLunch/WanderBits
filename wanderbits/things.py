@@ -60,13 +60,13 @@ class Thing(object):
         """
         return self._properties['description']
 
-
 #################################################
 #################################################
 
 # nice discussion that clarifies inheriting from an
 # abstract class and using super()
 # http://pymotw.com/2/abc/#concrete-methods-in-abcs
+
 
 class Room(Thing):
     """

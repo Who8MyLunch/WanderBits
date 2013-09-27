@@ -4,7 +4,7 @@ WanderBits To Do List
 
 Near-Term Tasks
 ---------------
--
+- Match user action token to a valid Action class instance
 - Implement Look action
 - Implement Thing as container of other Things.
 - Implement User as subclass of Thing

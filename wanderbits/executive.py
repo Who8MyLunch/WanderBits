@@ -8,7 +8,7 @@ Executive class for WanderBits, a text-based adventure game.
 
 import sys
 
-# import errors
+import errors
 import line_parser
 # import action
 
@@ -18,7 +18,7 @@ class Executive(object):
     Executive class for WanderBits, a text-based adventure game.
     """
 
-    def __init__(self, options=None, stdin=None, stdout=None):
+    def __init__(self, game_info, stdin=None, stdout=None):
         """
         Initialize Executive class instance.
 
@@ -70,7 +70,6 @@ class Executive(object):
         Write some text out to the user.
         """
         output = '{:s}\n'.format(text)
-
         self.stdout.write(output)
 
     def start(self):
@@ -78,24 +77,27 @@ class Executive(object):
         Start running the Executive's event loop.  Block until user's game
         session is finished.
         """
+        try:
+            # Main loop.
+            self.console_write('\nWelcome\n')
+            for line in self.console_reader():
 
-        # Main loop.
-        self.console_write('\nWelcome\n')
-        for line in self.console_reader():
+                # Parse new line of text.
+                action_name, arguments = self.parser.parse(line)
 
-            # Parse new line of text.
-            action_name, arguments = self.parser.parse(line)
+                # Take action!
 
-            # Take action!
+                # Send response to user.
+                response = 'hello!!!! ' + action_name
+                self.console_write(response)
 
-            # Send response to user.
-            response = 'hello!!!! ' + action_name
-            self.console_write(response)
+        except errors.GameError as e:
+            print(e)
+            raise
 
-        # Clean up, save game state, exit.
-        # Save game state.
         self.console_write('Exit!\nSaving game state...')
 
+        # Save game state.
         # TODO: save game info.
 
         # End the game nicely.
@@ -103,6 +105,4 @@ class Executive(object):
 
 
 if __name__ == '__main__':
-
-    E = Executive()
-    E.start()
+    pass

@@ -5,6 +5,7 @@ from __future__ import division, print_function, unicode_literals
 import argparse
 import executive
 import config
+import errors
 
 
 def main():
@@ -27,12 +28,18 @@ def main():
     args = parser.parse_args()
 
     # Load data from config files.
-    fname_restore = args.config
-    info = config.read(fname_restore)
+    try:
+        game_info = config.read(args.config)
+    except IOError as e:
+        print(e.message)
+        return
 
     # Start the game.
-    E = executive.Executive(options=info)
-    E.start()
+    try:
+        E = executive.Executive(game_info)
+        E.start()
+    except errors.GameError as e:
+        print(e.message)
 
     # Done.
 

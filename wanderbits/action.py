@@ -98,5 +98,21 @@ class Take(Action):
             print(a)
 
 
+class Quit(Action):
+
+    def __init__(self, aliases=[]):
+        """
+        End the game.
+        """
+        self._names = ['quit'] + aliases
+
+    def apply(self, *args):
+        """
+        Acquire something from local scope.
+        """
+        for a in args:
+            print(a)
+
+
 if __name__ == '__main__':
     A = Go(['asd'])

@@ -11,7 +11,7 @@ class GameError(Exception):
     pass
 
 
-class ConsoleError(GameError):
+class ConfigError(GameError):
     pass
 
 
