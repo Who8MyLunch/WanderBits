@@ -4,11 +4,9 @@ WanderBits To Do List
 
 Near-Term Tasks
 ---------------
-- Implement Thing as container of other Things
 - Update Action unit tests for apply
 - Update Action unit tests for transactions
 - Implement Look action
-- Update item & room descriptions in config file
 - Implement Get Action function
 - Implement Put Action function
 - Implement Go Action function
@@ -16,6 +14,7 @@ Near-Term Tasks
 
 Long Term
 ---------
+- Update item & room descriptions in config file
 - After read config data, verify all data is valid
 - Thing unit tests
 - Serialize Things and Actions to file
@@ -24,6 +23,8 @@ Long Term
 
 Finished Tasks
 --------------
+- Update Action unit tests for add, remove
+- Implement Thing as container of other Things
 - Initial Things unit test
 - Initial Action unit tests
 - Implement User as subclass of Thing

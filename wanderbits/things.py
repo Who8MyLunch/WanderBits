@@ -45,10 +45,7 @@ class Thing(object):
         self._properties = {}
         self.update_properties(base_property_keys, kwargs)
 
-        # Other game Things will occupy this Thing's various scopes
-        # self._scope_0 = []  # intimate
-        # self._scope_1 = []  # local
-        # self._scope_2 = []  # global
+        # Things are able to contain other Things.
         self._container = []
 
         # Which Thing contains the current Thing.
@@ -107,10 +104,30 @@ class Thing(object):
             # msg = 'Thing hasn't a capacity: {:s}'.format(self.name)
             # raise errors.ThingError(msg)
 
+    @property
+    def parent(self):
+        """
+        Another Thing that contains self.
+        """
+        return self._parent
+
+    @parent.setter
+    def parent(self, value):
+        if isinstance(value, Thing) or value is None:
+            # TODO: I don't like having None here as a valid input.
+            self._parent = value
+        else:
+            msg = 'Parent must be a Thing: {:s}'.format(str(value))
+            raise errors.ThingError(msg)
+
     def add(self, obj):
         """
-        Place object inside oneself.
+        Place new object inside oneself.
         """
+        if not isinstance(obj, Thing):
+            msg = 'Object must be a Thing: {:s}'.format(str(obj))
+            raise errors.ThingError(msg)
+
         if obj in self._container:
             msg = '{:s} already contains {:s}'.format(self, obj)
             raise errors.ThingError(msg)
@@ -119,14 +136,20 @@ class Thing(object):
             msg = 'Not enough room in {:s} to contain {:s}'.format(self, obj)
             raise errors.ThingError(msg)
 
+        # Add to container, update it's parent.
         self._container.append(obj)
+        obj.parent = self
 
     def remove(self, obj):
         """
         Remove object from oneself.
         """
         try:
-            return self._container.remove(obj)
+            # Remove from container, remove self as parent.
+
+            self._container.remove(obj)
+            obj.parent = None
+
         except ValueError:
             msg = '{:s} does not contains {:s}'.format(self, obj)
             raise errors.ThingError(msg)
