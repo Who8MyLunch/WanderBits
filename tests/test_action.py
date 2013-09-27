@@ -7,7 +7,7 @@ import unittest
 from context import wanderbits
 
 
-class Test_Action(unittest.TestCase):
+class Test_Basic_Action(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -39,6 +39,18 @@ class Test_Action(unittest.TestCase):
 
     def test_apply(self):
         pass  # 1/0
+
+
+class Test_Action_Look(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_does_it_init(self):
+        user_placeholder = 'asdasd'
 
 # Standalone.
 if __name__ == '__main__':

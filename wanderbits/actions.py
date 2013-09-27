@@ -116,6 +116,7 @@ class Look(Action):
             pass
 
         print('apply')
+        print(target_thing)
         for a in args:
             print(a)
 
@@ -197,5 +198,6 @@ class Quit(Action):
         """
         raise errors.NiceExitError('Exit the game nicely.')
 
+
 if __name__ == '__main__':
-    A = Go(['asd'])
+    pass

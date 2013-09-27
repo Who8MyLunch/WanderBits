@@ -2,6 +2,7 @@
 
 from __future__ import division, print_function, unicode_literals
 
+import os
 import unittest
 
 from context import wanderbits
@@ -10,7 +11,8 @@ from context import wanderbits
 class Test_Things(unittest.TestCase):
 
     def setUp(self):
-        f = '../wanderbits/game.yml'
+        path_module = os.path.dirname(os.path.abspath(__file__))
+        f = os.path.join(path_module, '..', 'wanderbits', 'game.yml')
         self.game_info = wanderbits.config.read(f)
 
     def tearDown(self):
