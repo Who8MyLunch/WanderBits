@@ -222,6 +222,18 @@ class User(Thing):
         super(User, self).__init__(**kwargs)
         self.update_properties(self.property_keys, kwargs)
 
+    def local_things(self):
+        """
+        Return list of Things that are nearby.
+        These are Things that may be either physically manipulated or observed.
+        This includes the current room, Things in the room, Things held
+        by the user.  Does not include Things inside Things held
+        by the user.
+        """
+        room = self.parent
+        things = [room] + room.container + self.container
+        return things
+
 #################################################
 
 

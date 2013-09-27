@@ -66,6 +66,18 @@ class Executive(object):
         else:
             self.stdout = sys.stdout
 
+    @property
+    def user(self):
+        return self._user
+
+    @user.setter
+    def user(self, value):
+        if isinstance(value, things.User):
+            self._user = value
+        else:
+            msg = 'Input value must be a user: {:s}'.format(str(value))
+            raise errors.ExecutiveError(msg)
+
     def ingest_config(self, game_info):
         """
         Take in config dicts and instantiate in-game Things and Actions.
@@ -95,15 +107,15 @@ class Executive(object):
 
         # Create user object(s).
         for info in game_info['user']:
-            self._user = things.User(verbose=self.verbose, **info)
+            self.user = things.User(verbose=self.verbose, **info)
 
             # Place user in a room.
             room_start = things.find_thing(self._rooms, info['start'])
-            room_start.add(self._user)
+            room_start.add(self.user)
 
             if self.verbose:
-                print('user: {:s}, {:s}'.format(self._user.name,
-                                                self._user.description))
+                print('user: {:s}, {:s}'.format(self.user.name,
+                                                self.user.description))
 
         # Create game actions.
         for action_info in game_info['actions']:
@@ -184,7 +196,7 @@ class Executive(object):
 
                 # Take action!
                 game_action = self.find_action(user_action_name)
-                response = game_action.apply(self._user, *user_arguments)
+                response = game_action.apply(self.user, *user_arguments)
 
                 # Send response to user.
                 self.console_write(response)

@@ -132,6 +132,12 @@ class Test_Things(unittest.TestCase):
         self.assertRaises(wanderbits.errors.ThingError, B.remove, A)
 
 
+    #############################################
+    # User as a container.
+    def test_user_local_things(self):
+        E = wanderbits.executive.Executive(self.game_info)
+
+
 # Standalone.
 if __name__ == '__main__':
     unittest.main(verbosity=2)

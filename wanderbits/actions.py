@@ -91,7 +91,16 @@ class Look(Action):
     def apply(self, user, *args):
         """
         Look at something nearby.
+        Take first argument as action target.
+        Default to looking at current room if no args supplied.
         """
+        if not args:
+            # Default to look at the room.
+            args = ['room']
+l
+        target = args[0]
+        # Find Things at which to look, assuming target is name of a thing
+
         print('apply')
         for a in args:
             print(a)
