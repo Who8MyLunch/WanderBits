@@ -13,6 +13,24 @@ import things
 __all__ = ['Go', 'Look', 'Take', 'Put', 'Help', 'Quit']
 
 
+def find_action(many_actions, name):
+    """
+    Find a matching Action by name.
+    """
+    if not isinstance(name, basestring):
+        msg = 'name must be a string: {:s}'.format(str(name))
+        raise errors.ActionError(msg)
+
+    for a in many_actions:
+        if name in a.names:
+            return a
+
+    msg = 'Unable to find matching Thing: {:s}'.format(name)
+    raise errors.FindActionError(msg)
+
+#################################################
+
+
 class Action(object):
     """
     Action class for WanderBits, a text-based adventure game.

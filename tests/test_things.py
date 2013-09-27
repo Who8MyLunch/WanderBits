@@ -37,6 +37,7 @@ class Test_Things(unittest.TestCase):
         wanderbits.things.find_thing(many_things, name)
 
     def test_init_abc(self):
+        # Should not be able to instanciate an abstract class.
         self.assertRaises(TypeError, wanderbits.things.Thing)
 
     #############################################

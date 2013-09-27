@@ -11,7 +11,7 @@ import sys
 import errors
 import line_parser
 import things
-import actions
+import actions as actions_module   # too confusing keeping original name!
 
 
 class Executive(object):
@@ -51,7 +51,7 @@ class Executive(object):
 
         # Build parser with valid action names.
         action_names = []
-        for a in self._actions:
+        for a in self.actions:
             action_names += a.names
         self.parser = line_parser.Parser(action_names, verbose=self.verbose)
 
@@ -77,6 +77,21 @@ class Executive(object):
         else:
             msg = 'Input value must be a user: {:s}'.format(str(value))
             raise errors.ExecutiveError(msg)
+
+    @property
+    def actions(self):
+        """
+        List of known in-game actions.
+        """
+        return self._actions
+
+    @actions.setter
+    def actions(self, value):
+        if isinstance(value, actions_module.Action):
+            self._actions.append(value)
+        else:
+            msg = 'Input value must be an Action: {:s}'.format(str(value))
+            raise errors.ActionError(msg)
 
     def ingest_config(self, game_info):
         """
@@ -121,12 +136,12 @@ class Executive(object):
         for action_info in game_info['actions']:
             # Get action sub-class from actions module.
             name = action_info['name'].lower().title()
-            action_class = getattr(actions, name)
+            action_class = getattr(actions_module, name)
 
             # Instantiate Action class.
             action = action_class(self.user,  action_info['description'],
                                   action_info['aliases'])
-            self._actions.append(action)
+            self.actions.append(action)
 
             if self.verbose:
                 print('action: {:s}, {:s}'.format(action.names,
@@ -172,7 +187,7 @@ class Executive(object):
         Return Action sub-class instance that matches user's action name.
         """
         # Loop over known game actions.
-        for action in self._actions:
+        for action in self.actions:
             # Does it match?
             if user_action_name in action.names:
                 return action

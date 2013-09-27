@@ -27,6 +27,10 @@ class ActionError(GameError):
     pass
 
 
+class FindActionError(ActionError):
+    pass
+
+
 class LookActionError(ActionError):
     pass
 

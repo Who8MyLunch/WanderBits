@@ -2,6 +2,7 @@
 
 from __future__ import division, print_function, unicode_literals
 
+import os
 import unittest
 
 from context import wanderbits
@@ -44,14 +45,18 @@ class Test_Basic_Action(unittest.TestCase):
 class Test_Action_Look(unittest.TestCase):
 
     def setUp(self):
-        pass
+        path_module = os.path.dirname(os.path.abspath(__file__))
+        f = os.path.join(path_module, '..', 'wanderbits', 'game.yml')
+        self.game_info = wanderbits.config.read(f)
 
     def tearDown(self):
         pass
 
-    def test_does_it_init(self):
-        user_placeholder = 'asdasd'
+    def test_look(self):
+        E = wanderbits.executive.Executive(self.game_info)
 
+        A_look = wanderbits.actions.find_action(E.actions, 'look')
+        print(A_look)
 # Standalone.
 if __name__ == '__main__':
     unittest.main(verbosity=2)
