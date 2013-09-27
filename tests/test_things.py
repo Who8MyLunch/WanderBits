@@ -10,7 +10,7 @@ from context import wanderbits
 class Test_Things(unittest.TestCase):
 
     def setUp(self):
-        f = 'test_config.yml'
+        f = '../wanderbits/game.yml'
         self.game_info = wanderbits.config.read(f)
 
     def tearDown(self):
