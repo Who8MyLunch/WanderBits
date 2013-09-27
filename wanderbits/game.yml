@@ -55,19 +55,26 @@ items:
       start: bedroom
 
 
-action_aliases:
-    go: [move, walk, run, jog]
+actions:
+  - name: go
+    description: to inspect an object in detail
+    aliases: [move, walk, run, jog]
 
-    # north: [n]
-    # east: [e]
-    # south: [s]
-    # west: [w]
-    # up: [u]
-    # down: [d]
+  - name: take
+    description: to acquire an item
+    aliases: [get, grab]
 
-    take: [get, grab]
+  - name: put
+    description: to relinquish possession of an item
+    aliases: [drop]
 
-    put: [drop]
+  - name: quit
+    description: to stop the game
+    aliases: [exit, end]
 
-    # eat: [chew, nibble]
 
+user:
+  - name: SpaceJunkie
+    description: I need more candies for the program!
+    capacity: 100
+    start: kitchen

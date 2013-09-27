@@ -11,7 +11,7 @@ import sys
 import errors
 import line_parser
 import things
-import action
+import actions
 
 
 class Executive(object):
@@ -29,22 +29,31 @@ class Executive(object):
         stdin, stdout: default to sys.stdin and sys.stdout
         """
 
+        self.verbose = verbose
+
         # Storage for game content.
+        self._user = None
         self._rooms = []
         self._items = []
         self._actions = []
 
         # Ingest game config information.
         if isinstance(game_info, dict):
-            self.ingest_config(game_info, verbose=verbose)
+            self.ingest_config(game_info)
 
         elif isinstance(game_info, list):
             for g in game_info:
-                self.ingest_config(g, verbose=verbose)
+                self.ingest_config(g)
 
         else:
             msg = 'Invalid game_info: {:s}'.format(str(type(game_info)))
             raise errors.ExecutiveError(msg)
+
+        # Build parser with valid action names.
+        action_names = []
+        for a in self._actions:
+            action_names += a.names
+        self.parser = line_parser.Parser(action_names, verbose=self.verbose)
 
         # Setup stdin and stdout.
         if stdin:
@@ -57,10 +66,7 @@ class Executive(object):
         else:
             self.stdout = sys.stdout
 
-        actions = ['go', 'quit', 'exit']
-        self.parser = line_parser.Parser(actions)
-
-    def ingest_config(self, game_info, verbose=False):
+    def ingest_config(self, game_info):
         """
         Take in config dicts and instantiate in-game Things and Actions.
         This function may be called multiple time in order to ingest multiple
@@ -68,31 +74,41 @@ class Executive(object):
         """
         # Create game rooms.
         for a in game_info['rooms']:
-            room = things.Room(verbose=verbose, **a)
+            room = things.Room(verbose=self.verbose, **a)
             self._rooms.append(room)
 
-            if verbose:
+            if self.verbose:
                 print('room: {:s}, {:s}'.format(room.name, room.description))
 
         # Create game items.
         for a in game_info['items']:
-            item = things.Item(verbose=verbose, **a)
+            item = things.Item(verbose=self.verbose, **a)
             self._items.append(item)
 
-            if verbose:
-                print('item: {:s}'.format(item.name))
+            if self.verbose:
+                print('item: {:s}, {:s}'.format(item.name, item.description))
+
+        # Create user object.
+        for a in game_info['user']:
+            self._user = things.User(verbose=self.verbose, **a)
+
+            if self.verbose:
+                print('item: {:s}, {:s}'.format(item.name, item.description))
 
         # Create game actions.
-        for name, aliases in game_info['action_aliases'].items():
-            # Get action sub-class from action module.
-            Action_obj = getattr(action, name.lower().title())
+        for action_info in game_info['actions']:
+            # Get action sub-class from actions module.
+            name = action_info['name'].lower().title()
+            action_class = getattr(actions, name)
 
             # Instantiate Action class.
-            instance = Action_obj(aliases)
-            self._actions.append(instance)
+            action = action_class(action_info['description'],
+                                  action_info['aliases'])
+            self._actions.append(action)
 
-            if verbose:
-                print('alias: {:s}'.format(instance.names))
+            if self.verbose:
+                print('action: {:s}, {:s}'.format(action.names,
+                      action.description))
 
     #############################################
     # Console read/write
@@ -128,6 +144,20 @@ class Executive(object):
         self.stdout.write(output)
 
     #############################################
+    # Running the game.
+    def find_action(self, user_action_name):
+        """
+        Return Action sub-class instance that matches user's action name.
+        """
+        # Loop over known game actions.
+        for action in self._actions:
+            # Does it match?
+            if user_action_name in action.names:
+                return action
+
+        # No match found.
+        msg = 'No action found to match: {:s}'.format(user_action_name)
+        raise errors.ExecutiveError(msg)
 
     def start(self):
         """
@@ -140,12 +170,14 @@ class Executive(object):
             for line in self.console_reader():
 
                 # Parse new line of text.
-                action_name, arguments = self.parser.parse(line)
+                user_action_name, user_arguments = self.parser.parse(line)
 
                 # Take action!
+                game_action = self.find_action(user_action_name)
+                game_action.apply(user_arguments)
 
                 # Send response to user.
-                response = 'hello!!!! ' + action_name
+                response = 'hello!!!! ' + user_action_name
                 self.console_write(response)
 
         except errors.GameError as e:

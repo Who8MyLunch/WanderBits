@@ -26,10 +26,10 @@ class Thing(object):
         Each kind of game item needs to be implemented as a subclass of
         the Thing base class.
         """
-        property_keys = ['name', 'description']
+        base_property_keys = ['name', 'description']
 
         self._properties = {}
-        self.update_properties(property_keys, kwargs)
+        self.update_properties(base_property_keys, kwargs)
 
         # Other game Things may occupy the scope of a given Thing.
         self._scope_0 = []  # intimate

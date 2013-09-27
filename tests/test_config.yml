@@ -2,37 +2,12 @@ rooms:
     - name: kitchen
       description: An average-looking kitchen.  It looks very tidy
       connections:
-        east: livingroom
         west: den
 
     - name: den
       description: A cozy den with lots of books on the shelves
       connections:
-        down: tunnel
-        north: bedroom
-
-    - name: bedroom
-      description: A messy bedroom with toys and clothes all over the floor
-      connections:
-        south: den
-        east: kitchen
-
-    - name: livingroom
-      description: A nice room for family chit chat
-      connections:
-        west: kitchen
-        down: tunnel
-
-    - name: tunnel
-      description: A dark tunnel running east to west
-      connections:
-        west: den
-        east: livingroom
-
-    - name: attic
-      description: A dark storage area above the bedroom
-      connections:
-        down: bedroom
+        north: kitchen
 
 
 items:
@@ -47,12 +22,6 @@ items:
       size: 1
       capacity: 100
       start: kitchen
-
-    - name: hatchet
-      description: a wicked little axe
-      size: 2
-      capacity: 0
-      start: bedroom
 
 
 actions:
@@ -74,4 +43,7 @@ actions:
 
 
 user:
-  - start: kitchen
+  - name: SpaceJunkie
+    description: I need more candies for the program!
+    capacity: 100
+    start: kitchen

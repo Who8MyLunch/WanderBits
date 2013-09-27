@@ -23,7 +23,7 @@ class Action(object):
     __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
-    def __init__(self, aliases=[]):
+    def __init__(self):
         """
         Initialize Action class.
 
@@ -40,6 +40,13 @@ class Action(object):
         """
         return self._names
 
+    @property
+    def description(self):
+        """
+        This Action's description.
+        """
+        return self._description
+
     @abc.abstractmethod
     def apply(self, *args):
         """
@@ -54,11 +61,12 @@ class Action(object):
 
 class Go(Action):
 
-    def __init__(self, aliases=[]):
+    def __init__(self, description=None, aliases=[]):
         """
         Character navigation action.
         """
         self._names = ['go'] + aliases
+        self._description = description
 
     def apply(self, *args):
         """
@@ -71,11 +79,12 @@ class Go(Action):
 
 class Look(Action):
 
-    def __init__(self, aliases=[]):
+    def __init__(self, description=None, aliases=[]):
         """
         Introspection of nearby items.
         """
         self._names = ['look'] + aliases
+        self._description = description
 
     def apply(self, *args):
         """
@@ -88,11 +97,12 @@ class Look(Action):
 
 class Take(Action):
 
-    def __init__(self, aliases=[]):
+    def __init__(self, description=None, aliases=[]):
         """
         Acquire a nearby item.
         """
         self._names = ['take'] + aliases
+        self._description = description
 
     def apply(self, *args):
         """
@@ -105,11 +115,12 @@ class Take(Action):
 
 class Put(Action):
 
-    def __init__(self, aliases=[]):
+    def __init__(self, description=None, aliases=[]):
         """
         Acquire a nearby item.
         """
-        self._names = ['take'] + aliases
+        self._names = ['put'] + aliases
+        self._description = description
 
     def apply(self, *args):
         """
@@ -122,11 +133,12 @@ class Put(Action):
 
 class Quit(Action):
 
-    def __init__(self, aliases=[]):
+    def __init__(self, description=None, aliases=[]):
         """
         End the game.
         """
         self._names = ['quit'] + aliases
+        self._description = description
 
     def apply(self, *args):
         """

@@ -24,6 +24,9 @@ def main():
     parser.add_argument('--config', default='game.yml',
                         help='game configuration file.')
 
+    parser.add_argument('--verbose', default=False, action='store_true',
+                        help='display information while running.')
+
     # Parse command line arguments.
     args = parser.parse_args()
 
@@ -36,7 +39,7 @@ def main():
 
     # Start the game.
     try:
-        E = executive.Executive(game_info, verbose=True)
+        E = executive.Executive(game_info, verbose=args.verbose)
         E.start()
     except errors.GameError as e:
         print(e.message)

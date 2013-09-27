@@ -6,6 +6,9 @@ Thursday Afternoon, Sept. 26, 2013
 ----------------------------------
 This afternoon and this evening is a big push.
 
+Ok.  This evening it feels like I am rushing through my work.  I've done lots of detail work on Actions, Things, and Executive and I really want to take time _right_ _now_ to work on some unit tests.  I feel pressure to keep working on more features!  Time for a feature break.  I'll add a few unit tests and then regroup on the next feature.
+
+The next big feature to add is the concept of a `Thing` being contained inside another `Thing`.  This will enable the `User` class to have a sense of location in a room.  The first `Action` to hook up after the container feature will be the `Look` action.
 
 Thursday Morning, Sept. 26, 2013
 --------------------------------

@@ -14,7 +14,8 @@ class Parser(object):
     Parser class for WanderBits, a text-based adventure game.
     """
 
-    def __init__(self, actions, punctuation=None, ignore_words=None):
+    def __init__(self, actions, punctuation=None, ignore_words=None,
+                 verbose=False):
         """
         Initialize text parser.
 
@@ -27,7 +28,7 @@ class Parser(object):
         if issubclass(type(actions), basestring):
             actions = [actions]
 
-        self.actions = [a.lower() for a in actions]
+        self._actions = [a.lower() for a in actions]
 
         if not punctuation:
             self.punctuation = ',.?!;:-+[]{}'
@@ -36,7 +37,8 @@ class Parser(object):
             self.ignore_words = ['a', 'the', 'at', 'or', 'in', 'on',
                                  'to', 'too', 'eh', 'me', 'my']
 
-        # Done.
+        if verbose:
+            print('parser actions: {:s}'.format(self._actions))
 
     def parse(self, line):
         """
@@ -62,11 +64,10 @@ class Parser(object):
         action_name, action_arguments = tokens[0], tokens[1:]
 
         # Valid action?
-        if action_name not in self.actions:
+        if action_name not in self._actions:
             msg = 'The word "{:s}" is not a valid action.'.format(action_name)
             raise errors.ParserError(msg)
 
-        # Done.
         return action_name, action_arguments
 
     def chop_words(self, line):
