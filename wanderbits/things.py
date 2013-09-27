@@ -16,7 +16,6 @@ class Thing(object):
     This class is a base class.  Inherit from this class to implement
     a particular game item.
     """
-    property_keys = ['name', 'description']
 
     __metaclass__ = abc.ABCMeta
 
@@ -27,8 +26,10 @@ class Thing(object):
         Each kind of game item needs to be implemented as a subclass of
         the Thing base class.
         """
+        property_keys = ['name', 'description']
+
         self._properties = {}
-        self.update_properties(self.property_keys, kwargs)
+        self.update_properties(property_keys, kwargs)
 
         # Other game Things may occupy the scope of a given Thing.
         self._scope_0 = []  # intimate
@@ -42,6 +43,7 @@ class Thing(object):
         for k in property_keys:
             try:
                 self._properties[k] = mapping[k]
+
             except KeyError:
                 print(k)
                 raise
@@ -95,7 +97,7 @@ class Item(Thing):
     property_keys = ['size', 'capacity']
 
     def __init__(self, **kwargs):
-        super(Room, self).__init__(**kwargs)
+        super(Item, self).__init__(**kwargs)
         self.update_properties(self.property_keys, kwargs)
 
 #################################################
@@ -108,7 +110,7 @@ class User(Thing):
     property_keys = ['capacity']
 
     def __init__(self, **kwargs):
-        super(Room, self).__init__(**kwargs)
+        super(User, self).__init__(**kwargs)
         self.update_properties(self.property_keys, kwargs)
 
 #################################################

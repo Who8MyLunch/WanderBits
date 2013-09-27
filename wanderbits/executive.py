@@ -10,7 +10,8 @@ import sys
 
 import errors
 import line_parser
-# import action
+import things
+import action
 
 
 class Executive(object):
@@ -18,13 +19,34 @@ class Executive(object):
     Executive class for WanderBits, a text-based adventure game.
     """
 
-    def __init__(self, game_info, stdin=None, stdout=None):
+    def __init__(self, game_info, stdin=None, stdout=None, verbose=False):
         """
         Initialize Executive class instance.
+
+        game_info: a dict or a sequence of dicts containing game configuration
+        information.
 
         stdin, stdout: default to sys.stdin and sys.stdout
         """
 
+        # Storage for game content.
+        self._rooms = []
+        self._items = []
+        self._actions = []
+
+        # Ingest game config information.
+        if isinstance(game_info, dict):
+            self.ingest_config(game_info, verbose=verbose)
+
+        elif isinstance(game_info, list):
+            for g in game_info:
+                self.ingest_config(g, verbose=verbose)
+
+        else:
+            msg = 'Invalid game_info: {:s}'.format(str(type(game_info)))
+            raise errors.ExecutiveError(msg)
+
+        # Setup stdin and stdout.
         if stdin:
             self.stdin = stdin
         else:
@@ -38,8 +60,43 @@ class Executive(object):
         actions = ['go', 'quit', 'exit']
         self.parser = line_parser.Parser(actions)
 
-        # Done.
+    def ingest_config(self, game_info, verbose=False):
+        """
+        Take in config dicts and instantiate in-game Things and Actions.
+        This function may be called multiple time in order to ingest multiple
+        config files.
+        """
+        # Create game rooms.
+        for a in game_info['rooms']:
+            room = things.Room(verbose=verbose, **a)
+            self._rooms.append(room)
 
+            if verbose:
+                print('room: {:s}, {:s}'.format(room.name, room.description))
+
+        # Create game items.
+        for a in game_info['items']:
+            item = things.Item(verbose=verbose, **a)
+            self._items.append(item)
+
+            if verbose:
+                print('item: {:s}'.format(item.name))
+
+        # Create game actions.
+        for name, aliases in game_info['action_aliases'].items():
+            # Get action sub-class from action module.
+            Action_obj = getattr(action, name.lower().title())
+
+            # Instantiate this Action class.
+            instance = Action_obj(aliases)
+
+            self._actions.append(instance)
+
+            if verbose:
+                print('alias: {:s}'.format(instance.names))
+
+    #############################################
+    # Console read/write
     def console_read(self):
         """
         Read a line of text from the user.  Block until user hits enter.
@@ -60,10 +117,9 @@ class Executive(object):
 
         except KeyboardInterrupt:
             # catch when the user hits ctrl-c at the prompt.
-            # Yield exit command.
+            # Yield exit command.  This is just as if the user had
+            # typed this at the game prompt.
             yield 'exit'
-
-        # Done.
 
     def console_write(self, text):
         """
@@ -71,6 +127,8 @@ class Executive(object):
         """
         output = '{:s}\n'.format(text)
         self.stdout.write(output)
+
+    #############################################
 
     def start(self):
         """

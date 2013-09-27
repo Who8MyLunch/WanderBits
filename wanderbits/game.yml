@@ -58,16 +58,16 @@ items:
 action_aliases:
     go: [move, walk, run, jog]
 
-    north: [n]
-    east: [e]
-    south: [s]
-    west: [w]
-    up: [u]
-    down: [d]
+    # north: [n]
+    # east: [e]
+    # south: [s]
+    # west: [w]
+    # up: [u]
+    # down: [d]
 
     take: [get, grab]
 
     put: [drop]
 
-    eat: [chew, nibble]
+    # eat: [chew, nibble]
 

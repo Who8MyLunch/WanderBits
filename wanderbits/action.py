@@ -10,6 +10,9 @@ import abc
 # import errors
 
 
+__all__ = ['Go', 'Look', 'Take', 'Quit']
+
+
 class Action(object):
     """
     Action class for WanderBits, a text-based adventure game.
@@ -28,7 +31,6 @@ class Action(object):
         Each game action needs to be implemented as a subclass of the Action
         base class.
         """
-        # self._names = []
         pass
 
     @property
@@ -62,6 +64,7 @@ class Go(Action):
         """
         Make the character go somewhere.
         """
+        print('apply')
         for a in args:
             print(a)
 
@@ -78,6 +81,7 @@ class Look(Action):
         """
         Look at something nearby.
         """
+        print('apply')
         for a in args:
             print(a)
 
@@ -94,6 +98,24 @@ class Take(Action):
         """
         Acquire something from local scope.
         """
+        print('apply')
+        for a in args:
+            print(a)
+
+
+class Put(Action):
+
+    def __init__(self, aliases=[]):
+        """
+        Acquire a nearby item.
+        """
+        self._names = ['take'] + aliases
+
+    def apply(self, *args):
+        """
+        Acquire something from local scope.
+        """
+        print('apply')
         for a in args:
             print(a)
 
@@ -110,6 +132,7 @@ class Quit(Action):
         """
         Acquire something from local scope.
         """
+        print('apply')
         for a in args:
             print(a)
 

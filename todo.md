@@ -4,30 +4,29 @@ WanderBits To Do List
 
 Near-Term Tasks
 ---------------
+- Executive ingest game information
 - Match user action token to a valid Action class instance
 - Implement Look action
-- Implement Thing as container of other Things.
+- Update item & room descriptions in config file
+- Implement Thing as container of other Things
 - Implement User as subclass of Thing
-- Add argparse for application command line
+- Implement Get Action function
+- Implement Put Action function
+- Implement Go Action function
+
 
 Long Term
 ---------
 - After read config data, verify all is valid
 - Action unit tests
 - Thing unit tests
-- Implement Go Action function
-- Implement Get Action function
-- Implement Put Action function
 - Serialize Things and Actions to file.
 - Implement saving game progress.
 
 
-Research Topics
----------------
-
-
 Finished Tasks
 --------------
+- Add argparse for application command line
 - Remove docopt dependence
 - How to handle door locks and keys??  Ignore for now.  Falls into category of opening/closing things.
 - Write the basic Thing class

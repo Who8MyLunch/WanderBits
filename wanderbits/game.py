@@ -36,7 +36,7 @@ def main():
 
     # Start the game.
     try:
-        E = executive.Executive(game_info)
+        E = executive.Executive(game_info, verbose=True)
         E.start()
     except errors.GameError as e:
         print(e.message)
