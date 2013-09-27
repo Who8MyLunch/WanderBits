@@ -10,6 +10,8 @@ Ok.  This evening it feels like I am rushing through my work.  I've done lots of
 
 The next big feature to add is the concept of a `Thing` being contained inside another `Thing`.  This will enable the `User` class to have a sense of location in a room.  The first `Action` to hook up after the container feature will be the `Look` action.
 
+I have added new unit tests for the major feature I added today.  I'm getting pretty tired!
+
 Thursday Morning, Sept. 26, 2013
 --------------------------------
 Here we are getting close to the end.  The only class I have yet to make progress on is the `Thing` class.  This class is also potentially the most complicated of all.  An abstract `Thing` has relationships with other `Things`.  The nature of the relationship defines restrictions on whether or not a given `Action` has access to a `Thing`.  Relationships may or may not be reciprocal.  If `Thing` A is within the local scope of `Thing` B, then `Thing` B is also within the local scope of `Thing` A.   However, if A is inside of B, the reverse is _not_ possible.  Occupying one scope may also imply occupying other higher-level scopes.
