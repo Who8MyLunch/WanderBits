@@ -16,22 +16,25 @@ class Test_Action(unittest.TestCase):
         pass
 
     def test_does_it_init(self):
-        wanderbits.actions.Look()
-        wanderbits.actions.Go()
-        wanderbits.actions.Take()
-        wanderbits.actions.Put()
-        wanderbits.actions.Quit()
+        user_placeholder = 'asdasd'
+        wanderbits.actions.Look(user_placeholder)
+        wanderbits.actions.Go(user_placeholder)
+        wanderbits.actions.Take(user_placeholder)
+        wanderbits.actions.Put(user_placeholder)
+        wanderbits.actions.Quit(user_placeholder)
 
     def test_init_abc(self):
         self.assertRaises(TypeError, wanderbits.actions.Action)
 
     def test_property_name(self):
-        A = wanderbits.actions.Look()
+        user_placeholder = 'asdasd'
+        A = wanderbits.actions.Look(user_placeholder)
         self.assertTrue('look' in A.names)
 
     def test_property_description(self):
+        user_placeholder = 'asdasd'
         d = 'hello a test is here'
-        A = wanderbits.actions.Look(description=d)
+        A = wanderbits.actions.Look(user_placeholder, description=d)
         self.assertTrue(A.description == d)
 
     def test_apply(self):

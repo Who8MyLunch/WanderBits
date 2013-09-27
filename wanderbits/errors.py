@@ -15,6 +15,22 @@ class ConfigError(GameError):
     pass
 
 
+class ThingError(GameError):
+    pass
+
+
+class FindThingError(ThingError):
+    pass
+
+
+class ActionError(GameError):
+    pass
+
+
+class LookActionError(ActionError):
+    pass
+
+
 class ParserError(GameError):
     pass
 
@@ -23,9 +39,9 @@ class ExecutiveError(GameError):
     pass
 
 
-class ActionError(GameError):
+class NiceExitError(GameError):
     pass
 
 
-class ThingError(GameError):
+class FatalError(GameError):
     pass

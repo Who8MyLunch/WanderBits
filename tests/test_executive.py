@@ -87,7 +87,7 @@ class Test_Executive(unittest.TestCase):
 
         self.assertTrue(len(E._rooms) == 6)
         self.assertTrue(len(E._items) == 4)
-        self.assertTrue(len(E._actions) == 4)
+        self.assertTrue(len(E._actions) == 6)
 
     def test_ingested_types(self):
         E = wanderbits.executive.Executive(self.game_info)

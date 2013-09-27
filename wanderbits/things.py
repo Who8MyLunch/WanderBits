@@ -13,13 +13,18 @@ import errors
 # Helpers
 def find_thing(many_things, name):
     """
-    Find a matching Thing.
+    Find a matching Thing by name.
     """
+    if not isinstance(name, basestring):
+        msg = 'name must be a string: {:s}'.format(str(name))
+        raise errors.ThingError(msg)
+
     for t in many_things:
         if t.name == name:
             return t
 
-    raise errors.ThingError('Unable to find matching Thing: {:s}'.format(name))
+    msg = 'Unable to find matching Thing: {:s}'.format(name)
+    raise errors.FindThingError(msg)
 
 #################################################
 

@@ -7,10 +7,10 @@ Action class for WanderBits, a text-based adventure game.
 """
 
 import abc
-# import errors
+import errors
+import things
 
-
-__all__ = ['Go', 'Look', 'Take', 'Quit']
+__all__ = ['Go', 'Look', 'Take', 'Put', 'Help', 'Quit']
 
 
 class Action(object):
@@ -31,7 +31,7 @@ class Action(object):
         Each game action needs to be implemented as a subclass of the Action
         base class.
         """
-        pass
+        self._user = None
 
     @property
     def names(self):
@@ -41,6 +41,13 @@ class Action(object):
         return self._names
 
     @property
+    def user(self):
+        """
+        Game User instance.
+        """
+        return self._user
+
+    @property
     def description(self):
         """
         This Action's description.
@@ -48,7 +55,7 @@ class Action(object):
         return self._description
 
     @abc.abstractmethod
-    def apply(self, user, *args):
+    def apply(self, *args):
         """
         Do the work required for this action.
         Each game action needs to be implemented as a subclass of the Action
@@ -61,14 +68,15 @@ class Action(object):
 
 class Go(Action):
 
-    def __init__(self, description=None, aliases=[]):
+    def __init__(self, user, description=None, aliases=[]):
         """
         Character navigation action.
         """
+        self._user = user
         self._names = ['go'] + aliases
         self._description = description
 
-    def apply(self, user, *args):
+    def apply(self, *args):
         """
         Make the character go somewhere.
         """
@@ -81,14 +89,15 @@ class Go(Action):
 
 class Look(Action):
 
-    def __init__(self, description=None, aliases=[]):
+    def __init__(self, user, description=None, aliases=[]):
         """
         Introspection of nearby items.
         """
+        self._user = user
         self._names = ['look'] + aliases
         self._description = description
 
-    def apply(self, user, *args):
+    def apply(self, *args):
         """
         Look at something nearby.
         Take first argument as action target.
@@ -98,8 +107,13 @@ class Look(Action):
             # Default to look at the room.
             args = ['room']
 
+        # Find Things at which to look, assuming argument is name of a thing.
         target = args[0]
-        # Find Things at which to look, assuming target is name of a thing
+        try:
+            # Search through user-local things by name.
+            target_thing = things.find_thing(self.user.local_things, target)
+        except errors.FindThingError:
+            pass
 
         print('apply')
         for a in args:
@@ -110,14 +124,15 @@ class Look(Action):
 
 class Take(Action):
 
-    def __init__(self, description=None, aliases=[]):
+    def __init__(self, user, description=None, aliases=[]):
         """
         Acquire a nearby item.
         """
+        self._user = user
         self._names = ['take'] + aliases
         self._description = description
 
-    def apply(self, user, *args):
+    def apply(self, *args):
         """
         Acquire something from local scope.
         """
@@ -130,10 +145,11 @@ class Take(Action):
 
 class Put(Action):
 
-    def __init__(self, description=None, aliases=[]):
+    def __init__(self, user, description=None, aliases=[]):
         """
         Acquire a nearby item.
         """
+        self._user = user
         self._names = ['put'] + aliases
         self._description = description
 
@@ -148,25 +164,38 @@ class Put(Action):
         return 'measfdasfda'
 
 
+class Help(Action):
+
+    def __init__(self, user, description=None, aliases=[]):
+        """
+        Give advice on how to play the game.
+        """
+        if not description:
+            description = self.__doc__
+
+        self._user = user
+        self._names = ['help'] + aliases
+        self._description = description
+
+    def apply(self, *args):
+        return self.description
+
+
 class Quit(Action):
 
-    def __init__(self, description=None, aliases=[]):
+    def __init__(self, user, description=None, aliases=[]):
         """
         End the game.
         """
+        self._user = user
         self._names = ['quit'] + aliases
         self._description = description
 
-    def apply(self, user, *args):
+    def apply(self, *args):
         """
-        Acquire something from local scope.
+        Raise error signalling time to exit the game in an orderly fashion.
         """
-        print('apply')
-        for a in args:
-            print(a)
-
-        return 'measfdasfda'
-
+        raise errors.NiceExitError('Exit the game nicely.')
 
 if __name__ == '__main__':
     A = Go(['asd'])

@@ -84,8 +84,12 @@ items:
 
 
 actions:
-  - name: go
+  - name: look
     description: to inspect an object in detail
+    aliases: [inspect, view]
+
+  - name: go
+    description: navigate to a new location
     aliases: [move, walk, run, jog]
 
   - name: take
@@ -96,6 +100,12 @@ actions:
     description: to relinquish possession of an item
     aliases: [drop]
 
+  - name: help
+    description: 'available commands include: look, go, take, put, help, and quit.'
+    aliases: []
+
   - name: quit
     description: to stop the game
     aliases: [exit, end]
+
+

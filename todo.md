@@ -23,6 +23,7 @@ Long Term
 
 Finished Tasks
 --------------
+- Handle invalid game actions.
 - Update Action unit tests for add, remove
 - Implement Thing as container of other Things
 - Initial Things unit test

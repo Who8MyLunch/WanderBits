@@ -124,7 +124,7 @@ class Executive(object):
             action_class = getattr(actions, name)
 
             # Instantiate Action class.
-            action = action_class(action_info['description'],
+            action = action_class(self.user,  action_info['description'],
                                   action_info['aliases'])
             self._actions.append(action)
 
@@ -148,15 +148,15 @@ class Executive(object):
         """
         A generator to yield user's lines of text to the caller.
         """
-        try:
-            while True:
+        while True:
+            try:
                 yield self.console_read()
 
-        except KeyboardInterrupt:
-            # catch when the user hits ctrl-c at the prompt.
-            # Yield exit command.  This is just as if the user had
-            # typed this at the game prompt.
-            yield 'exit'
+            except KeyboardInterrupt:
+                # catch when the user hits ctrl-c at the prompt.
+                # Yield exit command.  This is just as if the user had
+                # typed this at the game prompt.
+                yield 'exit'
 
     def console_write(self, text):
         """
@@ -178,7 +178,7 @@ class Executive(object):
                 return action
 
         # No match found.
-        msg = 'No action found to match: {:s}'.format(user_action_name)
+        msg = 'Not a valid action: {:s}'.format(user_action_name)
         raise errors.ExecutiveError(msg)
 
     def start(self):
@@ -190,27 +190,48 @@ class Executive(object):
             # Main loop.
             self.console_write('\nWelcome\n')
             for line in self.console_reader():
+                try:
+                    # Parse new line of text.
+                    user_action_name, user_arguments = self.parser.parse(line)
 
-                # Parse new line of text.
-                user_action_name, user_arguments = self.parser.parse(line)
+                    # Take action!
+                    game_action = self.find_action(user_action_name)
+                    response = game_action.apply(*user_arguments)
 
-                # Take action!
-                game_action = self.find_action(user_action_name)
-                response = game_action.apply(self.user, *user_arguments)
+                # Catch some easy errors inside the event loop.
+                except errors.ParserError as e:
+                    # catch when user supplied word is not a valid action.
+                    response = e.message
 
                 # Send response to user.
                 self.console_write(response)
 
-        except errors.GameError as e:
-            print(e)
-            raise
+        # Catch difficult errors outside the event loop.
+        # I am not happy with all these 'return' statements below.  This
+        # should really be more elegant.
+        except errors.NiceExitError as e:
+            self.console_write('Exit!')
 
-        self.console_write('Exit!\nSaving game state...')
+        except errors.FatalError as e:
+            self.console_write('Fatal game error: {:s}'.format(e.message))
+            return
+
+        except errors.GameError as e:
+            msg = 'Unhandled game error: {:s}, {:s}'.format(type(e), e.message)
+            self.console_write(msg)
+            return
+
+        except Exception as e:
+            msg = 'unhandled Python exception: {:s}'.format(e.message)
+            self.console_write(msg)
+            return
+
+        self.console_write('Saving game state...')
 
         # Save game state.
         # TODO: save game info.
 
-        # End the game nicely.
+        # Hello! Goodbye!
         self.console_write('Bye.\n')
 
 
