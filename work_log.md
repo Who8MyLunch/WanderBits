@@ -1,16 +1,21 @@
 WanderBits Work Log
 ===================
-This is a living document that will evolve as work progresses.
+
+Friday Morning, Sept. 27, 2013
+------------------------------
+This is the last day for the project.  So what is the next big thing on my list?  I made a start last night with the container feature.  I realized then that my ideas about **Intimate**, **Local**, and **Global** scope might be too complicated.  Or perhaps they are more of a guidance, rather than concepts that must be explicitly coded into the game.  Going forward, I am going to focus on the idea of each `Thing` having a container property that allows it to hold other `Things`.  The  methods `Add` and `Remove` will make this work.  I still wonder about making a transaction happen. Maybe I try to add the object in question to the new `Thing`'s container, then so long as there were no errors, I remove it from the object's old container.  In order to make this task easier, I will also store with each `Thing` a link to it's parent object, i.e. it's container.  This link must be updated as part of making a transaction.
+
+
+Thursday Evening, Sept. 26, 2013
+--------------------------------
+I just added new unit tests for the major features I added today.  I'm getting pretty tired!  I connected the response output from each action to the user's console display.  The next big feature to add is the concept of a `Thing` being contained inside another `Thing`.  This will enable the `User` class to have a sense of location in a room.  The first `Action` to hook up after the container feature will be the `Look` action.
+
 
 Thursday Afternoon, Sept. 26, 2013
 ----------------------------------
 This afternoon and this evening is a big push.
 
 Ok.  This evening it feels like I am rushing through my work.  I've done lots of detail work on Actions, Things, and Executive and I really want to take time _right_ _now_ to work on some unit tests.  I feel pressure to keep working on more features!  Time for a feature break.  I'll add a few unit tests and then regroup on the next feature.
-
-The next big feature to add is the concept of a `Thing` being contained inside another `Thing`.  This will enable the `User` class to have a sense of location in a room.  The first `Action` to hook up after the container feature will be the `Look` action.
-
-I have added new unit tests for the major feature I added today.  I'm getting pretty tired!  I connected the response output from each action to the user's console display.
 
 
 Thursday Morning, Sept. 26, 2013
