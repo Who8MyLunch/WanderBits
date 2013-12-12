@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 entry_points = {'console_scripts': ['wanderbits = wanderbits:main']}
 
-with open('README.md', 'r') as fi:
+with open('readme.md', 'r') as fi:
     long_description = fi.read()
 
 # Do it.
